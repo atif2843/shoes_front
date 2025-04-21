@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "CHUCK 70 WORN IN",
+    "image": "/images/shoe1.png",
+    "price": 4999,
+    "category": "Men",
+    "brand": "Converse",
+    "stock": 15
+  },
+  {
+    "id": 2,
+    "name": "CHUCK 70 SKETCH",
+    "image": "/images/shoe2.png",
+    "price": 6999,
+    "category": "Men",
+    "brand": "Converse",
+    "stock": 10
+  },
+  {
+    "id": 3,
+    "name": "RUN STAR LEGACY CX",
+    "image": "/images/shoe3.png",
+    "price": 8999,
+    "category": "Women",
+    "brand": "Converse",
+    "stock": 8
+  },
+  {
+    "id": 4,
+    "name": "CHUCK TAYLOR ALL STAR LIFT",
+    "image": "/images/shoe4.png",
+    "price": 8999,
+    "category": "Men",
+    "brand": "Converse",
+    "stock": 5
+  },
+  {
+    "id": 5,
+    "name": "AIR FORCE 1 '07",
+    "image": "/images/nike1.png",
+    "price": 7999,
+    "category": "Unisex",
+    "brand": "Nike",
+    "stock": 20
+  },
+  {
+    "id": 6,
+    "name": "NIKE AIR MAX 90",
+    "image": "/images/nike2.png",
+    "price": 9999,
+    "category": "Men",
+    "brand": "Nike",
+    "stock": 12
+  },
+  {
+    "id": 7,
+    "name": "ADIDAS ULTRABOOST",
+    "image": "/images/adidas1.png",
+    "price": 10999,
+    "category": "Unisex",
+    "brand": "Adidas",
+    "stock": 18
+  },
+  {
+    "id": 8,
+    "name": "ADIDAS SUPERSTAR",
+    "image": "/images/adidas2.png",
+    "price": 6999,
+    "category": "Women",
+    "brand": "Adidas",
+    "stock": 7
+  }
+]

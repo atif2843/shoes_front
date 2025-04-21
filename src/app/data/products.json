@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "name": "Chuck 70 Worn In",
+    "image": "/images/Brands/converse.png",
+    "categories": ["Converse", "Men"],
+    "colors": ["#CFCFCF", "#000000"],
+    "brand": "nike",
+    "price": "4999"
+  },
+  {
+    "id": 2,
+    "name": "Air Jordan 1 High OG 'Black Toe'",
+    "image": "/images/airjordan1.jpg",
+    "categories": ["Jordan", "Men"],
+    "colors": ["#FF0000", "#FFFFFF", "#000000"],
+    "brand": "y-3",
+    "price": "10295"
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70 Sketch",
+    "image": "/images/chuck70sketch.jpg",
+    "categories": ["Converse", "Men"],
+    "colors": ["#0000FF", "#FFFFFF"],
+    "brand": "converse",
+    "price": "6999"
+  },
+  {
+    "id": 4,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "4795"
+  },
+  {
+    "id": 5,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "4795"
+  },
+  {
+    "id": 6,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "4795"
+  },
+  {
+    "id": 7,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "4795"
+  },
+  {
+    "id": 8,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "4795"
+  },
+  {
+    "id": 9,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "1795"
+  },
+  {
+    "id": 10,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "8795"
+  },
+  {
+    "id": 11,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "2795"
+  },
+  {
+    "id": 12,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "9795"
+  },
+  {
+    "id": 13,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "20795"
+  },
+  {
+    "id": 14,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "14795"
+  },
+  {
+    "id": 15,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "13795"
+  },
+  {
+    "id": 16,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "12795"
+  },
+  {
+    "id": 17,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "11795"
+  },
+  {
+    "id": 18,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "5795"
+  },
+  {
+    "id": 19,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "1795"
+  },
+  {
+    "id": 20,
+    "name": "Speedcat OG",
+    "image": "/images/speedcat.jpg",
+    "categories": ["Puma", "Men"],
+    "colors": ["#000000", "#FFFFFF"],
+    "brand": "converse",
+    "price": "4791"
+  }
+]

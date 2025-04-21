@@ -1,0 +1,81 @@
+[
+  {
+    "id": 1,
+    "name": "Converse",
+    "slug": "converse",
+    "image": "/images/brands/converse.png",
+    "bg_image": "/images/brands/converse-bg.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Y-3",
+    "slug": "y-3",
+    "image": "/images/brands/y3.png"
+  },
+  {
+    "id": 3,
+    "name": "Vans Off The Wall",
+    "slug": "vans-off-the-wall",
+    "image": "/images/brands/vans.png"
+  },
+  {
+    "id": 4,
+    "name": "Toms",
+    "slug": "toms",
+    "image": "/images/brands/toms.png"
+  },
+  {
+    "id": 5,
+    "name": "Thrasher",
+    "slug": "thrasher",
+    "image": "/images/brands/thrasher.png"
+  },
+  {
+    "id": 6,
+    "name": "Super Plastic",
+    "slug": "super-plastic",
+    "image": "/images/brands/superplastic.png"
+  },
+  {
+    "id": 7,
+    "name": "Super Kicks",
+    "slug": "super-kicks",
+    "image": "/images/brands/superkicks.png"
+  },
+  {
+    "id": 8,
+    "name": "Sneaker LAB",
+    "slug": "sneaker-lab",
+    "image": "/images/brands/sneakerlab.png"
+  },
+  {
+    "id": 9,
+    "name": "Sneaker Freaker",
+    "slug": "sneaker-freaker",
+    "image": "/images/brands/sneakerfreaker.png"
+  },
+  {
+    "id": 10,
+    "name": "Puma",
+    "slug": "puma",
+    "image": "/images/brands/puma.png"
+  },
+  {
+    "id": 11,
+    "name": "Nike",
+    "slug": "nike",
+    "image": "/images/brands/nike.png"
+  },
+  {
+    "id": 12,
+    "name": "Reebok",
+    "slug": "reebok",
+    "image": "/images/brands/reebok.png"
+  },
+  {
+    "id": 13,
+    "name": "Jordan",
+    "slug": "jordan",
+    "image": "/images/brands/jordan.png"
+  }
+]
