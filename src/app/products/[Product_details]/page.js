@@ -50,7 +50,7 @@ export default function ProductDetails() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <ProductDetail product={product} />
       <Recommended products={recommendedProducts} currentProductId={product.id} />
       <Footer />
