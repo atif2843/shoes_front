@@ -17,7 +17,7 @@ const HeroImages = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
+      
       <Hero images={HeroImages} />
       <Brands />
       <Trending />

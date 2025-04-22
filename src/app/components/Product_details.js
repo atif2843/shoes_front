@@ -59,14 +59,8 @@ export default function ProductDetail({ product }) {
   const isAddToCartDisabled = !selectedSize || !selectedColor;
   
   return (
-    <div className="container mx-auto py-25 px-8 ">
-      {/* Breadcrumb */}
-      <div className="text-sm text-gray-500 flex items-center space-x-2 mb-4">
-        <span>Home</span> <span className="text-gray-400">/</span>
-        <span className="text-gray-400 font-medium">Product</span>
-        <span className="text-gray-400">/</span>
-        <span className="text-black font-medium">{product.name}</span>
-      </div>
+    <div className="container mx-auto py-4 px-8 ">
+      
       {/* Image Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -130,7 +124,7 @@ export default function ProductDetail({ product }) {
                   key={idx}
                   onClick={() => setSelectedColor(color)}
                   className={`w-8 h-8 rounded-full border-2 ${
-                    selectedColor === color ? "border-blue-500" : "border-gray-300"
+                    selectedColor === color ? "outline outline-2 outline-blue-500" : "border-gray-300"
                   }`}
                   style={{ backgroundColor: color }}
                   aria-label={`Select color ${color}`}

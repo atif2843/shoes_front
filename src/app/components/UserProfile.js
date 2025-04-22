@@ -284,7 +284,7 @@ export default function UserProfile() {
   };
 
   return (
-    <div className="w-full mx-auto px-8 py-40">
+    <div className="w-full mx-auto px-8 py-4">
       <div className="flex justify-between flex-wrap gap-14">
         <div className="flex-1">
           <div className="flex gap-4 mb-6">
@@ -400,10 +400,10 @@ export default function UserProfile() {
             <p className="text-gray-500">Here you can find your profile data.</p>
 
             <div className="mt-6 flex flex-col items-center">
-              {imagePreview || user?.avatar || formData.custom_img ? (
+              {imagePreview || formData.custom_img || user?.photoURL ? (
                 <div className="relative">
                   <img
-                    src={imagePreview || user?.avatar || formData.custom_img}
+                    src={imagePreview || formData.custom_img || user?.photoURL}
                     alt="Profile"
                     className="w-20 h-20 rounded-full border border-gray-300 object-cover"
                   />

@@ -145,3 +145,22 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom breakpoint for 900px */
+@media (max-width: 900px) {
+  .mobile-menu-900 {
+    display: block;
+  }
+  .desktop-menu-900 {
+    display: none;
+  }
+}
+
+@media (min-width: 901px) {
+  .mobile-menu-900 {
+    display: none;
+  }
+  .desktop-menu-900 {
+    display: flex;
+  }
+}

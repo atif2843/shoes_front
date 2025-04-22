@@ -43,7 +43,7 @@ export default function AllProducts() {
           size: product.size,
           gender: product.gender,
           productType: product.productType,
-          image: product.productImages?.[0]?.prod_images || "/images/placeholder.jpg",
+          images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
           categories: [product.productType, product.brand],
           price: `₹${product.sellPrice.toLocaleString()}`,
           colors: product.color || []

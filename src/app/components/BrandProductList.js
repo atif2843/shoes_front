@@ -98,7 +98,7 @@ export default function BrandProductList({
               product={{
                 ...product,
                 image: product.productImages?.[0]?.prod_images || '/images/placeholder.png',
-                categories: [brandDetails?.name],
+                categories: [product.productType, product.brand],
                 name: product.name,
                 price: `₹${product.sellPrice || product.price}`,
                 colors: product.color || []

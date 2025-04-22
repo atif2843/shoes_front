@@ -101,14 +101,18 @@ export default function NewArrival() {
         <div className="flex gap-4">
           {products.map((product) => (
             <div key={product.id} className="flex-none w-[300px]">
-              <Card product={{
+              <Card 
+              key={product.id}
+              product={{
                 ...product,
-                image: product.productImages?.[0]?.prod_images || '/images/placeholder.png',
-                categories: [product.brand],
+                images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
+                categories: [product.productType, product.brand],
                 name: product.name,
+                slug: product.slug,
                 price: `₹${product.sellPrice.toLocaleString()}`,
                 colors: product.color || []
-              }} />
+              }}
+            />
             </div>
           ))}
         </div>

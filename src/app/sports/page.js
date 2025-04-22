@@ -52,7 +52,7 @@ export default function SportsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Sports Products</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">Sports Products</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products.map((product) => (
@@ -61,7 +61,7 @@ export default function SportsPage() {
             product={{
               ...product,
               images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
-              categories: [product.brand],
+              categories: [product.productType, product.brand],
               name: product.name,
               slug: product.slug,
               price: `₹${product.sellPrice.toLocaleString()}`,

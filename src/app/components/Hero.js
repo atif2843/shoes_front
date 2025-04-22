@@ -8,13 +8,17 @@ import "./carousel.css"; // Custom styles for pagination
 
 export default function Carousel({ images }) {
   return (
-    <div className="relative w-full mx-auto px-4 sm:px-6 md:px-8 pt-8 sm:pt-12">
+    <div className="pt-16 sm:pt-20 md:pt-16 lg:pt-8 relative w-full mx-auto px-4 sm:px-6 md:px-8">
       <div className="max-w-7xl mx-auto">
         <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={0}
           slidesPerView={1}
           loop={true}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
           pagination={{
             el: ".custom-pagination",
             clickable: true,
@@ -57,10 +61,10 @@ export default function Carousel({ images }) {
         </Swiper>
 
         {/* Custom Pagination */}
-        <div className="w-auto bg-red-500 relative">
-        <div className="absolute bottom-0 left-0 flex justify-end md:justify-end pb-2 z-50 w-full md:w-1/4">
-          <div className="custom-pagination"></div>
-        </div>
+        <div className="w-auto relative">
+          <div className="absolute -bottom-6 left-0 flex justify-end md:justify-end z-30 w-full md:w-1/4">
+            <div className="custom-pagination"></div>
+          </div>
         </div>
       </div>
     </div>

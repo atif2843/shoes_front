@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import BrandProductList from "@/app/components/BrandProductList";
-import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import supabase from "@/app/api/auth/supabaseClient";
 
@@ -61,7 +60,6 @@ export default function BrandProductPage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
       <BrandProductList
         brandslug={brandslug}
         filteredProducts={filteredProducts}

@@ -72,7 +72,7 @@ export default function Recommended({ products = [], currentProductId }) {
 
         <div className="relative">
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
+            <div className="flex py-4">
 
               {filteredProducts.map((product) => (
             <Link 

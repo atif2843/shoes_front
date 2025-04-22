@@ -83,19 +83,18 @@ export default function TopFavoriteBrands() {
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
               <div key={product.id} className="min-w-[250px]">
-                <Card
-                  product={{
-                    ...product,
-                    image:
-                      product.productImages?.[0]?.prod_images ||
-                      "/images/placeholder.png",
-                    categories: [
-                      brands.find((b) => b.id === selectedBrand)?.name,
-                    ],
-                    name: product.name,
-                    price: `₹${product.sellPrice.toLocaleString()}`,
-                  }}
-                />
+                <Card 
+              key={product.id}
+              product={{
+                ...product,
+                images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
+                categories: [product.productType, product.brand],
+                name: product.name,
+                slug: product.slug,
+                price: `₹${product.sellPrice.toLocaleString()}`,
+                colors: product.color || []
+              }}
+            />
               </div>
             ))
           ) : (

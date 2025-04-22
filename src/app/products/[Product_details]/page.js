@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { getProductDetails, getRecommendedProducts } from "@/app/api/supabaseQueries"
 import Recommended from "@/app/components/Recommended";
 import Loader from "@/app/components/Loader";
-import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import ProductDetail from "@/app/components/Product_details";
 
@@ -51,8 +50,7 @@ export default function ProductDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar />
+    <div className="min-h-screen">
       <ProductDetail product={product} />
       <Recommended products={recommendedProducts} currentProductId={product.id} />
       <Footer />

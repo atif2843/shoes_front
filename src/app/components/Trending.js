@@ -106,7 +106,7 @@ export default function TrendingSection() {
               <Card product={{
                 ...product,
                 images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
-                categories: [product.brand],
+                categories: [product.productType, product.brand],
                 name: product.name,
                 slug: product.slug,
                 price: `₹${product.sellPrice.toLocaleString()}`,
