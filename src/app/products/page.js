@@ -4,7 +4,7 @@ import AllProducts from "../components/Allproduct";
 
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       <AllProducts />
       <Footer />
     </div>
