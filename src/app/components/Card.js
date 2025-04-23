@@ -7,6 +7,7 @@ import useAuthStore from "@/store/useAuthModal";
 import useWishlistStore from "@/store/useWishlistStore";
 import { addToWishlist, removeFromWishlist, isInWishlist } from "@/app/api/supabaseQueries";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function Card({ product }) {
   const { addToCart } = useCart();
@@ -159,11 +160,11 @@ export default function Card({ product }) {
           {/* Product Details */}
           <div className="">
             <div className="flex flex-col justify-between">
-              <a href={`/products/${product.slug}`}>
-              <h3 className="text-sm font-semibold mt-2 line-clamp-2">
-                {product.name}
-              </h3>
-              </a>
+              <Link href={`/products/${product.slug}`}>
+                <h3 className="text-sm font-semibold mt-2 line-clamp-2">
+                  {product.name}
+                </h3>
+              </Link>
               <p className="text-lg font-bold text-gray-800 mt-1">
                 {product.price.toLocaleString()}
               </p>

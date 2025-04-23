@@ -73,21 +73,14 @@ export default function Recommended({ products = [], currentProductId }) {
         <div className="relative">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex py-4">
-
               {filteredProducts.map((product) => (
-            <Link 
-            href={`/products/${product.slug}`}
-            className="text-sm font-medium "
-          >
-              <div 
+                <div 
                   key={product.id} 
                   className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4"
                 >
                   <Card product={product} />
                 </div>
-                </Link>
               ))}
-           
             </div>
           </div>
 
