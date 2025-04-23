@@ -113,7 +113,7 @@ export default function SearchPage() {
             <Search className="mx-auto h-12 w-12 text-gray-400 mb-4" />
             <h2 className="text-xl font-semibold text-gray-800 mb-2">No results found</h2>
             <p className="text-gray-600">
-              We couldn't find any products matching "{query}". Try different keywords or browse our categories.
+              We couldn&apose;t find any products matching &quote;{query}&quote;. Try different keywords or browse our categories.
             </p>
           </div>
         )}
