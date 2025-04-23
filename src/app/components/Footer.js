@@ -176,7 +176,7 @@ export default function Footer() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold mb-2 text-gray-800">Successfully Subscribed!</h3>
-              <p className="text-gray-600">Thank you for subscribing to our newsletter. We'll keep you updated with the latest news and offers.</p>
+              <p className="text-gray-600">Thank you for subscribing to our newsletter. We&apos;ll keep you updated with the latest news and offers.</p>
             </div>
           </div>
         </div>

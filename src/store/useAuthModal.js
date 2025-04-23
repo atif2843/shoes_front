@@ -17,19 +17,61 @@ const useAuthStore = create((set) => ({
   loginSuccess: () => set({ isLoggedIn: true, isLoginModalOpen: false }),
 
   loginWithGoogle: async () => {
-    const user = await signInWithGoogle();
-    if (user) {
-      // Fetch user data from Supabase using email
-      try {
+    try {
+      const user = await signInWithGoogle();
+      if (user) {
+        console.log("Google sign-in successful:", user.email);
+        
+        // Fetch user data from Supabase using email
         const { data, error } = await supabase
           .from('users')
           .select('*')
           .eq('email', user.email)
           .single();
 
+        // Log the full error object for debugging
         if (error) {
-          console.error("Error fetching user data by email:", error);
-          set({ user, isLoggedIn: true, isLoginModalOpen: false });
+          console.error("Error fetching user data by email:", JSON.stringify(error));
+          
+          // Check if user doesn't exist and create one if needed
+          if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
+            console.log("User not found in database, creating new user...");
+            
+            try {
+              // Create a new user in Supabase - removed avatar_url field
+              const { data: newUser, error: createError } = await supabase
+                .from('users')
+                .insert([
+                  {
+                    email: user.email,
+                    name: user.displayName || 'User',
+                    uid: user.uid
+                  }
+                ])
+                .select()
+                .single();
+                
+              if (createError) {
+                console.error("Error creating new user:", JSON.stringify(createError));
+                set({ user, isLoggedIn: true, isLoginModalOpen: false });
+              } else {
+                console.log("New user created successfully:", newUser);
+                set({ 
+                  user, 
+                  userData: newUser, 
+                  user_id: newUser.id,
+                  isLoggedIn: true, 
+                  isLoginModalOpen: false 
+                });
+              }
+            } catch (createErr) {
+              console.error("Exception during user creation:", createErr);
+              set({ user, isLoggedIn: true, isLoginModalOpen: false });
+            }
+          } else {
+            // For other errors, just set the user without userData
+            set({ user, isLoggedIn: true, isLoginModalOpen: false });
+          }
         } else {
           console.log("User data fetched by email:", data);
           set({ 
@@ -40,10 +82,11 @@ const useAuthStore = create((set) => ({
             isLoginModalOpen: false 
           });
         }
-      } catch (error) {
-        console.error("Error in loginWithGoogle:", error);
-        set({ user, isLoggedIn: true, isLoginModalOpen: false });
       }
+    } catch (error) {
+      console.error("Error in loginWithGoogle:", error);
+      // Set a basic user state even if there's an error
+      set({ isLoggedIn: false, isLoginModalOpen: false });
     }
   },
 
@@ -58,7 +101,38 @@ const useAuthStore = create((set) => ({
         .single();
 
       if (error) {
-        console.error("Error fetching user data by phone:", error);
+        console.error("Error fetching user data by phone:", JSON.stringify(error));
+        
+        // Check if user doesn't exist and create one if needed
+        if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
+          console.log("User not found in database, creating new user...");
+          
+          try {
+            // Create a new user in Supabase
+            const { data: newUser, error: createError } = await supabase
+              .from('users')
+              .insert([
+                {
+                  phone: phoneNumber,
+                  name: 'User',
+                }
+              ])
+              .select()
+              .single();
+              
+            if (createError) {
+              console.error("Error creating new user:", JSON.stringify(createError));
+              return null;
+            } else {
+              console.log("New user created successfully:", newUser);
+              return newUser;
+            }
+          } catch (createErr) {
+            console.error("Exception during user creation:", createErr);
+            return null;
+          }
+        }
+        
         return null;
       } else {
         console.log("User data fetched by phone:", data);
@@ -90,12 +164,49 @@ onAuthStateChanged(auth, async (user) => {
           .single();
 
         if (error) {
-          console.error("Error fetching user data by email:", error);
-          useAuthStore.setState({ user, isLoggedIn: true });
+          console.error("Error fetching user data by email:", JSON.stringify(error));
+          
+          // Check if user doesn't exist and create one if needed
+          if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
+            console.log("User not found in database, creating new user...");
+            
+            try {
+              // Create a new user in Supabase - removed avatar_url field
+              const { data: newUser, error: createError } = await supabase
+                .from('users')
+                .insert([
+                  {
+                    email: user.email,
+                    name: user.displayName || 'User',
+                    uid: user.uid
+                  }
+                ])
+                .select()
+                .single();
+                
+              if (createError) {
+                console.error("Error creating new user:", JSON.stringify(createError));
+                useAuthStore.setState({ user, isLoggedIn: true });
+              } else {
+                console.log("New user created successfully:", newUser);
+                useAuthStore.setState({ 
+                  user,
+                  userData: newUser, 
+                  user_id: newUser.id,
+                  isLoggedIn: true 
+                });
+              }
+            } catch (createErr) {
+              console.error("Exception during user creation:", createErr);
+              useAuthStore.setState({ user, isLoggedIn: true });
+            }
+          } else {
+            useAuthStore.setState({ user, isLoggedIn: true });
+          }
         } else {
           console.log("User data fetched by email:", data);
           useAuthStore.setState({ 
-            user, 
+            user,
             userData: data, 
             user_id: data.id, // Store the database user ID
             isLoggedIn: true 
@@ -110,8 +221,45 @@ onAuthStateChanged(auth, async (user) => {
           .single();
 
         if (error) {
-          console.error("Error fetching user data by phone:", error);
-          useAuthStore.setState({ user, isLoggedIn: true });
+          console.error("Error fetching user data by phone:", JSON.stringify(error));
+          
+          // Check if user doesn't exist and create one if needed
+          if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
+            console.log("User not found in database, creating new user...");
+            
+            try {
+              // Create a new user in Supabase
+              const { data: newUser, error: createError } = await supabase
+                .from('users')
+                .insert([
+                  {
+                    phone: user.phoneNumber,
+                    name: 'User',
+                    uid: user.uid
+                  }
+                ])
+                .select()
+                .single();
+                
+              if (createError) {
+                console.error("Error creating new user:", JSON.stringify(createError));
+                useAuthStore.setState({ user, isLoggedIn: true });
+              } else {
+                console.log("New user created successfully:", newUser);
+                useAuthStore.setState({ 
+                  user,
+                  userData: newUser, 
+                  user_id: newUser.id,
+                  isLoggedIn: true 
+                });
+              }
+            } catch (createErr) {
+              console.error("Exception during user creation:", createErr);
+              useAuthStore.setState({ user, isLoggedIn: true });
+            }
+          } else {
+            useAuthStore.setState({ user, isLoggedIn: true });
+          }
         } else {
           console.log("User data fetched by phone:", data);
           useAuthStore.setState({ 

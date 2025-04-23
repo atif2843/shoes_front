@@ -1,16 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import markerIconPng from "leaflet/dist/images/marker-icon.png";
-import markerShadowPng from "leaflet/dist/images/marker-shadow.png";
 import supabase from "../api/auth/supabaseClient";
 import { useRouter } from "next/navigation"; // Next.js 13+
 
-const DynamicMap = dynamic(
+// Dynamically import all Leaflet components with SSR disabled
+const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
   { ssr: false }
 );
 
@@ -24,6 +35,30 @@ export default function Contact() {
     message: "",
   });
   const [formErrors, setFormErrors] = useState(null);
+  const [isClient, setIsClient] = useState(false);
+  const [customMarker, setCustomMarker] = useState(null);
+
+  useEffect(() => {
+    setIsClient(true);
+    
+    // Import Leaflet and set up marker icon only on the client side
+    if (typeof window !== 'undefined') {
+      import("leaflet/dist/leaflet.css");
+      import("leaflet").then((L) => {
+        import("leaflet/dist/images/marker-icon.png").then((markerIconPng) => {
+          import("leaflet/dist/images/marker-shadow.png").then((markerShadowPng) => {
+            const icon = new L.default.Icon({
+              iconUrl: markerIconPng.default.src,
+              shadowUrl: markerShadowPng.default.src,
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+            });
+            setCustomMarker(icon);
+          });
+        });
+      });
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -61,19 +96,6 @@ export default function Contact() {
       setFormErrors(null);
     }
   };
-
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const customMarker = new L.Icon({
-    iconUrl: markerIconPng,
-    shadowUrl: markerShadowPng,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-  });
 
   return (
     <div className="container mx-auto px-8 py-28 ">
@@ -164,7 +186,7 @@ export default function Contact() {
       {/* Google Maps */}
       {isClient && (
         <div className="mt-8 h-96">
-          <DynamicMap
+          <MapContainer
             center={[19.120324086655422, 72.89253432774979]}
             zoom={12}
             className="h-full w-full"
@@ -176,7 +198,7 @@ export default function Contact() {
             >
               <Popup>Our Mumbai Office</Popup>
             </Marker>
-          </DynamicMap>
+          </MapContainer>
         </div>
       )}
     </div>

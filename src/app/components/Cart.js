@@ -298,7 +298,7 @@ export default function Cart() {
             <div className="flex flex-col items-center text-center">
               <AlertCircle className="text-yellow-500 w-16 h-16 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Order Placed, But WhatsApp Message Failed</h2>
-              <p className="text-gray-600 mb-4">Your order has been confirmed, but we couldn't send the WhatsApp message automatically.</p>
+              <p className="text-gray-600 mb-4">Your order has been confirmed, but we couldn&apos;t send the WhatsApp message automatically.</p>
               <p className="font-semibold mb-4">Order ID: <span className="text-blue-600">{orderId}</span></p>
               <p className="text-sm text-gray-500 mb-6">You can manually send the order details via WhatsApp by clicking the button below.</p>
               <div className="flex gap-2 w-full">
