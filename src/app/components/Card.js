@@ -14,7 +14,7 @@ export default function Card({ product }) {
   const [isAdding, setIsAdding] = useState(false);
   const { isLoggedIn, openLoginModal, user, userData } = useAuthStore();
   const [isInWishlistState, setIsInWishlistState] = useState(false);
-  const { wishlistItems } = useWishlistStore();
+  const { wishlistItems, addItem, removeItem, fetchWishlist } = useWishlistStore();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     containScroll: "trimSnaps",
@@ -22,7 +22,7 @@ export default function Card({ product }) {
     skipSnaps: false,
   });
 
-  // Check if product is in wishlist on component mount
+  // Check if product is in wishlist on component mount and when wishlistItems changes
   useEffect(() => {
     const checkWishlistStatus = async () => {
       if (isLoggedIn && userData) {
@@ -35,7 +35,7 @@ export default function Card({ product }) {
       }
     };
     checkWishlistStatus();
-  }, [isLoggedIn, userData, product.id]);
+  }, [isLoggedIn, userData, product.id, wishlistItems]);
 
   // Ensure images is an array and has at least one image
   const images =
@@ -61,15 +61,18 @@ export default function Card({ product }) {
         return;
       }
 
-      const { removeItem, addItem } = useWishlistStore.getState();
-
       if (isInWishlistState) {
         await removeItem(userData.id, product.id);
         setIsInWishlistState(false);
+        toast.success("Removed from wishlist");
       } else {
         await addItem(userData.id, product);
         setIsInWishlistState(true);
+        toast.success("Added to wishlist");
       }
+
+      // Refresh wishlist data
+      await fetchWishlist(userData.id);
     } catch (error) {
       console.error("Wishlist operation failed:", error);
       toast.error("Failed to update wishlist. Please try again.");
@@ -118,7 +121,7 @@ export default function Card({ product }) {
         <div className="relative flex-1">
           {/* Wishlist Button */}
           <button 
-            className="absolute top-4 right-2 p-1 bg-white rounded-full shadow" 
+            className="absolute top-4 right-2 p-1 bg-white rounded-full shadow hover:bg-gray-50 transition-colors" 
             name="wishlist"
             onClick={handleWishlistClick}
           >

@@ -230,7 +230,7 @@ export default function AllProducts() {
   }
 
   return (
-    <div className="flex flex-col space-y-4 py-20 px-8 bg-white">
+    <div className="flex flex-col space-y-4 py-10 px-8 bg-white">
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 flex items-center space-x-2">
         Home <ChevronRight className="h-4" />

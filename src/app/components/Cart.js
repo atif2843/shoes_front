@@ -164,8 +164,8 @@ export default function Cart() {
   return (
     <>
       <div className={`fixed inset-0 z-50 ${isOpen ? "block" : "hidden"}`}>
-        <div className="absolute inset-0 bg-opacity-50" onClick={handleClose}></div>
-        <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-lg flex flex-col">
+        <div className="absolute inset-0 bg-black/50" onClick={handleClose}></div>
+        <div className="absolute right-0 top-0 h-full w-[80%] sm:w-[400px] md:w-[450px] lg:w-[500px] bg-white shadow-lg flex flex-col">
           <div className="p-4 border-b flex justify-between items-center">
             <h2 className="text-xl font-semibold">Shopping Cart ({count} items)</h2>
             <button onClick={handleClose} className="p-1">
@@ -182,7 +182,7 @@ export default function Cart() {
               {items.length === 0 ? (
                 <div className="p-8 text-center flex-1 flex flex-col justify-center">
                   <p className="text-gray-500 mb-4">Your cart is empty</p>
-                  <Link href="/products">
+                  <Link href="/products" onClick={handleClose}>
                     <Button className="bg-blue-500 text-white">Continue Shopping</Button>
                   </Link>
                 </div>
@@ -249,7 +249,7 @@ export default function Cart() {
                         onClick={handlePlaceOrder}
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? "Processing..." : "Place Order on Whatsapp"}
+                        {isSubmitting ? "Placing Order..." : "Place Order"}
                       </Button>
                     </div>
                   </div>
@@ -263,28 +263,28 @@ export default function Cart() {
       {/* Success Popup */}
       {showSuccessPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-opacity-50"></div>
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4 relative z-10">
-            <div className="flex flex-col items-center text-center">
-              <CheckCircle className="text-green-500 w-16 h-16 mb-4" />
-              <h2 className="text-2xl font-bold mb-2">Order Placed Successfully!</h2>
-              <p className="text-gray-600 mb-4">Your order has been confirmed.</p>
-              <p className="font-semibold mb-4">Order ID: <span className="text-blue-600">{orderId}</span></p>
-              <p className="text-sm text-gray-500 mb-6">Please share this order ID on WhatsApp to complete your order.</p>
-              <div className="flex gap-2 w-full">
-                <Button 
-                  className="flex-1 bg-gray-200 text-black"
-                  onClick={() => setShowSuccessPopup(false)}
-                >
-                  Close
-                </Button>
-                <Button 
-                  className="flex-1 bg-green-500 text-white"
-                  onClick={handleWhatsAppShare}
-                >
-                  Share on WhatsApp
-                </Button>
-              </div>
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowSuccessPopup(false)}></div>
+          <div className="relative bg-white p-6 rounded-lg shadow-lg w-[80%] sm:w-[400px] md:w-[450px] lg:w-[500px]">
+            <div className="flex items-center justify-center mb-4">
+              <CheckCircle className="w-12 h-12 text-green-500" />
+            </div>
+            <h3 className="text-xl font-semibold text-center mb-2">Order Placed Successfully!</h3>
+            <p className="text-gray-600 text-center mb-4">
+              Your order has been placed. Order ID: {orderId}
+            </p>
+            <div className="flex gap-2">
+              <Button 
+                className="flex-1 bg-gray-200 text-black"
+                onClick={() => setShowSuccessPopup(false)}
+              >
+                Close
+              </Button>
+              <Button 
+                className="flex-1 bg-green-500 text-white"
+                onClick={handleWhatsAppShare}
+              >
+                Share on WhatsApp
+              </Button>
             </div>
           </div>
         </div>
@@ -293,29 +293,21 @@ export default function Cart() {
       {/* Error Popup */}
       {showErrorPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4 relative z-10">
-            <div className="flex flex-col items-center text-center">
-              <AlertCircle className="text-yellow-500 w-16 h-16 mb-4" />
-              <h2 className="text-2xl font-bold mb-2">Order Placed, But WhatsApp Message Failed</h2>
-              <p className="text-gray-600 mb-4">Your order has been confirmed, but we couldn't send the WhatsApp message automatically.</p>
-              <p className="font-semibold mb-4">Order ID: <span className="text-blue-600">{orderId}</span></p>
-              <p className="text-sm text-gray-500 mb-6">You can manually send the order details via WhatsApp by clicking the button below.</p>
-              <div className="flex gap-2 w-full">
-                <Button 
-                  className="flex-1 bg-gray-200 text-black"
-                  onClick={() => setShowErrorPopup(false)}
-                >
-                  Close
-                </Button>
-                <Button 
-                  className="flex-1 bg-green-500 text-white"
-                  onClick={handleWhatsAppShare}
-                >
-                  Send via WhatsApp
-                </Button>
-              </div>
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowErrorPopup(false)}></div>
+          <div className="relative bg-white p-6 rounded-lg shadow-lg w-[80%] sm:w-[400px] md:w-[450px] lg:w-[500px]">
+            <div className="flex items-center justify-center mb-4">
+              <AlertCircle className="w-12 h-12 text-red-500" />
             </div>
+            <h3 className="text-xl font-semibold text-center mb-2">Error</h3>
+            <p className="text-gray-600 text-center mb-4">
+              {errorMessage || "An error occurred while processing your order."}
+            </p>
+            <Button 
+              className="w-full bg-red-500 text-white"
+              onClick={() => setShowErrorPopup(false)}
+            >
+              Close
+            </Button>
           </div>
         </div>
       )}

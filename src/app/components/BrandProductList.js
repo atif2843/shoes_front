@@ -43,13 +43,6 @@ export default function BrandProductList({
 
   return (
     <div className="container mx-auto py-25">
-      {/* Breadcrumb */}
-      <div className="text-sm text-gray-500 flex items-center space-x-2 mb-4">
-        <span>Home</span> <span className="text-gray-400">/</span>
-        <span>Brands</span> <span className="text-gray-400">/</span>
-        <span className="text-black font-medium capitalize">{brandslug}</span>
-      </div>
-
       {/* Brand Image */}
       {brandDetails ? (
         <div className="relative">
@@ -73,10 +66,6 @@ export default function BrandProductList({
       )}
 
       <div className="mb-6 flex justify-end mt-12 px-8">
-        {/* Title */}
-        {/*<h1 className="text-3xl font-bold text-center mb-6 capitalize mt-18">
-          {brandslug} Products
-        </h1>*/}
         <select
           className="p-2 border rounded-md text-gray-700"
           value={sortOption}

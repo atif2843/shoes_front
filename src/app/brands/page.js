@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import Footer from "../components/Footer";
 
 export default function BrandsPage() {
   const [brands, setBrands] = useState([]);
@@ -54,6 +55,7 @@ export default function BrandsPage() {
   }
 
   return (
+    <div>
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">All Brands</h1>
       
@@ -104,6 +106,9 @@ export default function BrandsPage() {
           No brands found
         </div>
       )}
+      
+    </div>
+    <Footer />
     </div>
   );
 }

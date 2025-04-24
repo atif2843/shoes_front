@@ -328,17 +328,17 @@ export default function UserProfile() {
                     orders.map((order) => (
                       <Card
                         key={order.id}
-                        className="p-4 flex gap-4 mb-4 items-center border flex-row relative"
+                        className="p-4 mb-4 border"
                       >
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 justify-between">
-                            <h3 className="font-bold">{order.name}</h3>
-                            <span className="text-sm text-gray-500">Order ID: {order.order_id}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
+                        <div className="flex flex-col">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                            <div>
+                              <p className="text-sm text-gray-500">Order#: {order.order_id}</p>
+                              <h3 className="font-bold text-lg">{order.name}</h3>
+                            </div>
                             <p className="text-lg font-semibold">₹ {order.price.toLocaleString()}</p>
                           </div>
-                          <div className="flex items-center gap-2 justify-between mt-5">
+                          <div className="flex flex-wrap gap-2 mt-4">
                             <p className="text-xs px-2 py-1 outline-1 outline-gray-200 rounded-md">
                               Size: {order.size}
                             </p>

@@ -38,21 +38,21 @@ export default function Recommended({ products = [], currentProductId }) {
       id: product.id,
       name: product.name || '',
       slug: product.slug || '',
-      price: `₹${product.sellPrice.toLocaleString() || 0}`,
+      price: `₹${product.sellPrice?.toLocaleString() || 0}`,
       brand: product.brand || '',
       brandSlug: product.brand?.toLowerCase().replace(/\s+/g, '-') || '',
-      categories: [product.brand || ''],
+      categories: [product.productType || '', product.brand || ''],
       images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
       colors: product.color || [],
       image: product.productImages?.[0]?.prod_images || '/images/placeholder.png',
-      sellPrice: product.sellPrice.toLocaleString() || 0,
+      sellPrice: product.sellPrice?.toLocaleString() || 0,
       originalPrice: product.originalPrice || null,
       description: product.description || '',
       stock: product.stock || 0
     }));
 
   if (!filteredProducts.length) return null;
-  console.log(filteredProducts);
+
   return (
     <div className="bg-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

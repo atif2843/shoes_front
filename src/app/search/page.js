@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -7,7 +7,8 @@ import Card from "../components/Card";
 import { supabase } from "@/lib/supabaseClient";
 import { Search } from "lucide-react";
 
-export default function SearchPage() {
+// Create a separate component that uses useSearchParams
+function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [products, setProducts] = useState([]);
@@ -66,27 +67,69 @@ export default function SearchPage() {
   }, [query]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar />
-      
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
-            Search Results for "{query}"
-          </h1>
+    <main className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          Search Results for &quot;{query}&quot;
+        </h1>
+        <p className="text-gray-600">
+          {isLoading 
+            ? "Loading results..." 
+            : products.length > 0 
+              ? `Found ${products.length} products matching your search` 
+              : "No products found matching your search"}
+        </p>
+      </div>
+
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
+        </div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          {error}
+        </div>
+      ) : products.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <Card 
+              key={product.id}
+              product={{
+                ...product,
+                images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
+                categories: [product.productType, product.brand],
+                name: product.name,
+                slug: product.slug,
+                price: `₹${product.sellPrice?.toLocaleString() || '0'}`,
+                colors: product.color || []
+              }}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <Search className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">No results found</h2>
           <p className="text-gray-600">
-            {isLoading 
-              ? "Loading results..." 
-              : products.length > 0 
-                ? `Found ${products.length} products matching your search` 
-                : "No products found matching your search"}
+            We couldn&apos;t find any products matching &quot;{query}&quot;. Try different keywords or browse our categories.
           </p>
         </div>
+      )}
+    </main>
+  );
+}
 
-        {isLoading ? (
+// Main page component with Suspense boundary
+export default function SearchPage() {
+  return (
+    <div className="min-h-screen bg-gray-100">
+      <Navbar />
+      <Suspense fallback={
+        <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
           </div>
+<<<<<<< HEAD
         ) : error ? (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
             {error}
@@ -119,6 +162,12 @@ export default function SearchPage() {
         )}
       </main>
       
+=======
+        </div>
+      }>
+        <SearchResults />
+      </Suspense>
+>>>>>>> 5e20af95ad9b7e572345693e5c9a85d7a0d8588e
       <Footer />
     </div>
   );

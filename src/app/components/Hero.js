@@ -60,9 +60,9 @@ export default function Carousel({ images }) {
           ))}
         </Swiper>
 
-        {/* Custom Pagination */}
-        <div className="w-auto relative">
-          <div className="absolute -bottom-6 left-0 flex justify-end md:justify-end z-30 w-full md:w-1/4">
+        {/* Custom Pagination - Hidden on Mobile */}
+        <div className="w-auto relative hidden md:block">
+          <div className="absolute bottom-6 left-0 flex justify-end md:justify-end z-30 w-full md:w-1/4">
             <div className="custom-pagination"></div>
           </div>
         </div>

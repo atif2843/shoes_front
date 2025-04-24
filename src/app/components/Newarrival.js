@@ -1,9 +1,10 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import Card from "./Card";
 import { getNewArrivals } from "../api/supabaseQueries";
+import Link from "next/link";
 
 export default function NewArrival() {
   const [emblaRef, embla] = useEmblaCarousel({ loop: false });
@@ -63,37 +64,43 @@ export default function NewArrival() {
   return (
     <div className="relative w-full pt-10 px-8 bg-white py-8">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
         <h2 className="text-xl font-bold">New Arrivals</h2>
-        <div className="flex items-center gap-4">
-          <a
+        <div className="flex items-center gap-4 w-full sm:w-auto">
+          <div className="flex items-center gap-2">
+            <button
+              className={`p-2 rounded-md ${
+                isPrevDisabled
+                  ? "bg-gray-400 cursor-not-allowed text-white"
+                  : "bg-cyan-600 hover:bg-cyan-800 text-white"
+              }`}
+              onClick={() => embla && embla.scrollPrev()}
+              disabled={isPrevDisabled}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              className={`p-2 rounded-md ${
+                isNextDisabled
+                  ? "bg-gray-400 cursor-not-allowed text-white"
+                  : "bg-cyan-600 hover:bg-cyan-800 text-white"
+              }`}
+              onClick={() => embla && embla.scrollNext()}
+              disabled={isNextDisabled}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+          <Link
             href="/new-arrivals"
-            className="text-blue-600 hover:underline flex items-center"
+            className="group flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-800 text-white rounded-md transition-all duration-300 shadow-md hover:shadow-lg"
           >
-            Show More <ChevronRight size={20} className="ml-2" />
-          </a>
-          <button
-            className={`p-2 rounded-md ${
-              isPrevDisabled
-                ? "bg-gray-400 cursor-not-allowed text-white"
-                : "bg-cyan-600 hover:bg-cyan-800 text-white"
-            }`}
-            onClick={() => embla && embla.scrollPrev()}
-            disabled={isPrevDisabled}
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <button
-            className={`p-2 rounded-md ${
-              isNextDisabled
-                ? "bg-gray-400 cursor-not-allowed text-white"
-                : "bg-cyan-600 hover:bg-cyan-800 text-white"
-            }`}
-            onClick={() => embla && embla.scrollNext()}
-            disabled={isNextDisabled}
-          >
-            <ChevronRight size={20} />
-          </button>
+            <span className="font-medium">View All</span>
+            <ArrowRight 
+              size={20} 
+              className="transform group-hover:translate-x-1 transition-transform duration-300" 
+            />
+          </Link>
         </div>
       </div>
 
@@ -102,17 +109,17 @@ export default function NewArrival() {
           {products.map((product) => (
             <div key={product.id} className="flex-none w-[300px]">
               <Card 
-              key={product.id}
-              product={{
-                ...product,
-                images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
-                categories: [product.productType, product.brand],
-                name: product.name,
-                slug: product.slug,
-                price: `₹${product.sellPrice.toLocaleString()}`,
-                colors: product.color || []
-              }}
-            />
+                key={product.id}
+                product={{
+                  ...product,
+                  images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
+                  categories: [product.productType, product.brand],
+                  name: product.name,
+                  slug: product.slug,
+                  price: `₹${product.sellPrice.toLocaleString()}`,
+                  colors: product.color || []
+                }}
+              />
             </div>
           ))}
         </div>

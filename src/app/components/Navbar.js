@@ -38,7 +38,10 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isMarqueeVisible, setIsMarqueeVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const searchRef = useRef(null);
+  const profileRef = useRef(null);
+  const menuRef = useRef(null);
   const [user, setUser] = useState(null);
   const { openCart, cartItems } = useCartStore();
   const [searchQuery, setSearchQuery] = useState("");
@@ -157,6 +160,41 @@ export default function Navbar() {
     };
   }, [lastScrollY]);
 
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileDropdownOpen(false);
+      }
+    };
+
+    // Add both mouse and touch events
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchResults.length > 0) {
@@ -221,7 +259,17 @@ export default function Navbar() {
               )}
             </button>
 
-            <div className="text-2xl font-bold font-gantari">SUPER JUMP</div>
+            <div className="text-2xl font-bold font-gantari">
+            <Link href="/">
+              <Image
+              src="/images/logo.png"
+              alt="Logo"
+              title="Logo"
+              width="70"
+              height="70"
+              />
+              </Link>
+            </div>
 
             {/* Desktop Menu */}
             <div className="desktop-menu-900 space-x-6 font-geist">
@@ -362,41 +410,59 @@ export default function Navbar() {
               </div>
               {/* Google Authentication */}
               {user ? (
-                <div className="relative group">
-                  {user.photoURL ? (
-                    <Image
-                      src={user.photoURL}
-                      alt="User"
-                      width={40}
-                      height={10}
-                      className="w-10 h-10 rounded-full"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                      <User className="w-6 h-6 text-gray-600" />
-                    </div>
-                  )}
-                  <div className="absolute hidden group-hover:block bg-white shadow-md p-2 rounded-md right-0 min-w-[200px]">
-                    <p className="px-4 py-2 border-b border-gray-100 uppercase text-sm">
-                      {user.displayName || "User"}
-                    </p>
-                    <button
-                      onClick={() => {
-                        redirect("/profile");
-                      }}
-                      className="flex items-center w-full px-4 py-2.5 text-left hover:bg-gray-100"
-                    >
-                      <Settings className="w-4 h-4 mr-3" />
-                      Edit Profile
-                    </button>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2.5 text-left hover:bg-gray-100"
-                    >
-                      <LogOut className="w-4 h-4 mr-3" />
-                      Logout
-                    </button>
+                <div className="relative" ref={profileRef}>
+                  <div 
+                    onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                    className="cursor-pointer active:scale-95 transition-transform"
+                  >
+                    {user.photoURL ? (
+                      <Image
+                        src={user.photoURL}
+                        alt="User"
+                        width={40}
+                        height={40}
+                        className="w-10 h-10 rounded-full"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                        <User className="w-6 h-6 text-gray-600" />
+                      </div>
+                    )}
                   </div>
+                  {profileDropdownOpen && (
+                    <>
+                      {/* Backdrop for mobile */}
+                      <div 
+                        className="fixed inset-0 bg-black/20 z-40 sm:hidden"
+                        onClick={() => setProfileDropdownOpen(false)}
+                      />
+                      <div className="absolute bg-white shadow-lg p-2 rounded-md right-0 min-w-[200px] z-50 mt-2 sm:mt-1">
+                        <p className="px-4 py-2 border-b border-gray-100 uppercase text-sm font-medium">
+                          {user.displayName || "User"}
+                        </p>
+                        <button
+                          onClick={() => {
+                            router.push("/profile");
+                            setProfileDropdownOpen(false);
+                          }}
+                          className="flex items-center w-full px-4 py-2.5 text-left hover:bg-gray-100 active:bg-gray-200 transition-colors"
+                        >
+                          <Settings className="w-4 h-4 mr-3" />
+                          Edit Profile
+                        </button>
+                        <button
+                          onClick={() => {
+                            handleLogout();
+                            setProfileDropdownOpen(false);
+                          }}
+                          className="flex items-center w-full px-4 py-2.5 text-left hover:bg-gray-100 active:bg-gray-200 transition-colors"
+                        >
+                          <LogOut className="w-4 h-4 mr-3" />
+                          Logout
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               ) : (
                 <button
@@ -418,8 +484,12 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div className="fixed left-0 top-0 h-full w-[280px] bg-white shadow-lg">
+        <div className="fixed inset-0 bg-black/50 z-50" onClick={() => setMenuOpen(false)}>
+          <div 
+            ref={menuRef}
+            className="fixed left-0 top-0 h-full w-[280px] bg-white shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex flex-col h-full">
               <div className="flex items-center justify-between p-4 border-b">
                 <span className="text-xl font-bold">Menu</span>

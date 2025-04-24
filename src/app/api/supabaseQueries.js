@@ -380,7 +380,7 @@ export async function getNewArrivalsAll(lastId = null, limit = 5) {
 }
 
 // Get all brands with pagination
-export async function getBrandsAll(lastId = null, limit = 2) {
+export async function getBrandsAll(lastId = null, limit = 6) {
   try {
     let query = supabase
       .from('brands')

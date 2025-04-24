@@ -1,5 +1,14 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, signOut, signInWithPhoneNumber, RecaptchaVerifier, GoogleAuthProvider } from "firebase/auth";
+import { 
+  getAuth, 
+  signInWithPopup, 
+  signInWithRedirect, 
+  getRedirectResult,
+  signOut, 
+  signInWithPhoneNumber, 
+  RecaptchaVerifier, 
+  GoogleAuthProvider 
+} from "firebase/auth";
 import supabase from "@/app/api/auth/supabaseClient";
 
 // Your Firebase configuration (Replace with your credentials)
@@ -13,18 +22,29 @@ const firebaseConfig = {
   measurementId: "G-F5WW59LD5P",
 };
 
-const app = initializeApp( firebaseConfig );
-const auth = getAuth( app );
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-const signInWithGoogle = async () =>
-{
-  try
-  {
-    const result = await signInWithPopup( auth, provider );
-    const user = result.user;
+// Function to check if device is mobile
+const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
 
-    if ( !user ) return null;
+const signInWithGoogle = async () => {
+  try {
+    let result;
+    
+    // Use redirect for mobile devices and popup for desktop
+    if (isMobileDevice()) {
+      await signInWithRedirect(auth, provider);
+      result = await getRedirectResult(auth);
+    } else {
+      result = await signInWithPopup(auth, provider);
+    }
+
+    const user = result?.user;
+    if (!user) return null;
 
     // Prepare user data for Supabase
     const userData = {
@@ -36,33 +56,27 @@ const signInWithGoogle = async () =>
 
     // Check if user already exists in Supabase
     const { data: existingUser, error: fetchError } = await supabase
-      .from( "users" )
-      .select( "id" )
-      .eq( "email", userData.email );
+      .from("users")
+      .select("id")
+      .eq("email", userData.email);
 
-
-    if ( fetchError )
-    {
-      console.error( "Error checking user:", fetchError );
+    if (fetchError) {
+      console.error("Error checking user:", fetchError);
       return user;
     }
 
     // If user does not exist, insert into Supabase
-    if ( existingUser.length === 0 )
-    {
-      console.log( "User not found in Supabase, inserting...", userData );
-      const { error: insertError } = await supabase.from( "users" ).insert( [ userData ] );
-      if ( insertError )
-      {
-        console.error( "Error saving user:", insertError );
+    if (existingUser.length === 0) {
+      console.log("User not found in Supabase, inserting...", userData);
+      const { error: insertError } = await supabase.from("users").insert([userData]);
+      if (insertError) {
+        console.error("Error saving user:", insertError);
       }
     }
 
     return user;
-
-  } catch ( error )
-  {
-    console.error( "Google Sign-in Error:", error );
+  } catch (error) {
+    console.error("Google Sign-in Error:", error);
     return null;
   }
 };

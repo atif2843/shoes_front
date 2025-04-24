@@ -30,27 +30,27 @@ export default function Breadcrumb() {
   return (
     <nav className="bg-white py-3 px-4 sm:px-6 lg:px-8 border-b">
       <div className="max-w-7xl mx-auto">
-        <ol className="flex items-center space-x-2 text-sm">
-          <li>
+        <ol className="flex flex-wrap items-center gap-2 text-sm">
+          <li className="flex-shrink-0">
             <Link 
               href="/" 
-              className="text-gray-500 hover:text-gray-700 flex items-center"
+              className="text-gray-500 hover:text-gray-700 flex items-center whitespace-nowrap"
             >
-              <Home size={16} className="mr-1" />
-              Home
+              <Home size={16} className="mr-1 flex-shrink-0" />
+              <span className="hidden sm:inline">Home</span>
             </Link>
           </li>
           {breadcrumbItems.map((item, index) => (
-            <li key={item.path} className="flex items-center">
-              <ChevronRight size={16} className="text-gray-400" />
+            <li key={item.path} className="flex items-center flex-shrink-0">
+              <ChevronRight size={16} className="text-gray-400 flex-shrink-0" />
               {item.isLast ? (
-                <span className="ml-2 text-gray-900 font-medium">
+                <span className="ml-2 text-gray-900 font-medium break-words">
                   {item.label}
                 </span>
               ) : (
                 <Link 
                   href={item.path}
-                  className="ml-2 text-gray-500 hover:text-gray-700"
+                  className="ml-2 text-gray-500 hover:text-gray-700 break-words"
                 >
                   {item.label}
                 </Link>

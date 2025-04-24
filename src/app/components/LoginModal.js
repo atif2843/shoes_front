@@ -139,6 +139,46 @@ export default function LoginModal() {
       newOtp[index] = value;
       return newOtp;
     });
+
+    // Move to next input if value is entered
+    if (value && index < 5) {
+      const nextInput = document.querySelector(`input[name="otp-${index + 1}"]`);
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    // Handle backspace
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prevInput = document.querySelector(`input[name="otp-${index - 1}"]`);
+      if (prevInput) {
+        prevInput.focus();
+      }
+    }
+  };
+
+  const handleOtpPaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData('text').slice(0, 6);
+    if (/^\d+$/.test(pastedData)) {
+      const newOtp = [...otp];
+      for (let i = 0; i < pastedData.length; i++) {
+        if (i < 6) {
+          newOtp[i] = pastedData[i];
+        }
+      }
+      setOtp(newOtp);
+      
+      // Focus the next empty input or the last input
+      const nextEmptyIndex = newOtp.findIndex(val => !val);
+      const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
+      const nextInput = document.querySelector(`input[name="otp-${focusIndex}"]`);
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
   };
 
   return (
@@ -183,11 +223,17 @@ export default function LoginModal() {
               {otp.map((char, i) => (
                 <Input
                   key={i}
+                  name={`otp-${i}`}
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   maxLength={1}
-                  className="w-10 text-center"
+                  className="w-10 h-10 text-center text-lg"
                   value={char}
                   onChange={(e) => handleOtpChange(i, e.target.value)}
+                  onKeyDown={(e) => handleOtpKeyDown(i, e)}
+                  onPaste={handleOtpPaste}
+                  autoComplete="one-time-code"
                 />
               ))}
             </div>
