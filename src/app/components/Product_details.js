@@ -242,6 +242,7 @@ export default function ProductDetail({ product }) {
                 </p>
                 <p className="my-3">Product Type: {product.productType}</p>
                 <p className="my-3">Stock: {product.stock}</p>
+                <p>{product.details || "This is a high-quality product designed for comfort and durability."}</p>
               </div>
             )}
 
