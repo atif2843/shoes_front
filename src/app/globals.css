@@ -68,6 +68,81 @@ body {
   font-style: normal;
 }
 
+/* Styles for product details and description content */
+.product-details-content,
+.product-description-content {
+  line-height: 1.6;
+}
+
+.product-details-content h1,
+.product-description-content h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.product-details-content h2,
+.product-description-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.product-details-content h3,
+.product-description-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.product-details-content ul,
+.product-description-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-details-content ol,
+.product-description-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-details-content li,
+.product-description-content li {
+  margin-bottom: 0.25rem;
+}
+
+.product-details-content p,
+.product-description-content p {
+  margin-bottom: 0.5rem;
+}
+
+.product-details-content a,
+.product-description-content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.product-details-content strong,
+.product-description-content strong {
+  font-weight: 600;
+}
+
+.product-details-content em,
+.product-description-content em {
+  font-style: italic;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

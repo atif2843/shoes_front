@@ -50,11 +50,6 @@ export default function ProductDetail({ product }) {
     toast.success(`${quantity} ${quantity > 1 ? 'items' : 'item'} added to cart`);
   };
   
-  // Calculate discount percentage if originalPrice exists
-  const discount = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.sellPrice) / product.originalPrice) * 100) 
-    : 0;
-  
   // Check if both size and color are selected
   const isAddToCartDisabled = !selectedSize || !selectedColor;
   
@@ -73,7 +68,7 @@ export default function ProductDetail({ product }) {
               className="hover:scale-110 transition-transform"
             />
           </div>
-          <div className="flex gap-2 mt-4">
+          <div className="flex gap-2 mt-4 justify-center">
             {product.images.map((img, idx) => (
               <button key={idx} onClick={() => setSelectedImage(img)}>
                 <Image
@@ -102,15 +97,15 @@ export default function ProductDetail({ product }) {
           </div>
           <h1 className="text-2xl font-bold">{product.name}</h1>
           <p className="text-2xl font-semibold text-black flex items-center">
-            {discount > 0 && (
+            {product.discount > 0 && (
               <span className="bg-red-500 rounded-full py-1 px-3 text-white text-xs mr-2 font-normal">
-                {discount}% off
+                {product.discount}% off
               </span>
             )}
-            ₹ {product.sellPrice}{" "}
-            {product.originalPrice && (
+            ₹ {product.sellPrice.toLocaleString()}{" "}
+            {product.actualPrice && (
               <span className="line-through text-gray-500 font-normal text-lg ml-3">
-                ₹ {product.originalPrice}
+                ₹ {product.actualPrice}
               </span>
             )}
           </p>
@@ -242,7 +237,12 @@ export default function ProductDetail({ product }) {
                 </p>
                 <p className="my-3">Product Type: {product.productType}</p>
                 <p className="my-3">Stock: {product.stock}</p>
-                <p>{product.details || "This is a high-quality product designed for comfort and durability."}</p>
+                <div 
+                  className="product-details-content"
+                  dangerouslySetInnerHTML={{ 
+                    __html: product.details || "This is a high-quality product designed for comfort and durability." 
+                  }} 
+                />
               </div>
             )}
 
@@ -258,9 +258,14 @@ export default function ProductDetail({ product }) {
               />
             </button>
             {isAboutOpen && (
-              <p className="mt-2 text-sm text-gray-700">
-                {product.description || "This is a high-quality product designed for comfort and durability."}
-              </p>
+              <div className="mt-2 text-sm text-gray-700">
+                <div 
+                  className="product-description-content"
+                  dangerouslySetInnerHTML={{ 
+                    __html: product.description || "This is a high-quality product designed for comfort and durability." 
+                  }} 
+                />
+              </div>
             )}
           </div>
         </div>

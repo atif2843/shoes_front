@@ -221,7 +221,15 @@ export default function Navbar() {
               )}
             </button>
 
-            <div className="text-2xl font-bold font-gantari">SUPER JUMP</div>
+            <div className="text-2xl font-bold font-gantari">
+              <Image
+              src="/images/logo.png"
+              alt="Logo"
+              title="Logo"
+              width="70"
+              height="70"
+              />
+            </div>
 
             {/* Desktop Menu */}
             <div className="desktop-menu-900 space-x-6 font-geist">
