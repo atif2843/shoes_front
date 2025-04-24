@@ -129,45 +129,10 @@ export default function SearchPage() {
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
           </div>
-<<<<<<< HEAD
-        ) : error ? (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
-          </div>
-        ) : products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <Card 
-                key={product.id}
-                product={{
-                  ...product,
-                  images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
-                  categories: [product.productType, product.brand],
-                  name: product.name,
-                  slug: product.slug,
-                  price: `₹${product.sellPrice?.toLocaleString() || '0'}`,
-                  colors: product.color || []
-                }}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white p-8 rounded-lg shadow-md text-center">
-            <Search className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">No results found</h2>
-            <p className="text-gray-600">
-              We couldn&apose;t find any products matching &quote;{query}&quote;. Try different keywords or browse our categories.
-            </p>
-          </div>
-        )}
-      </main>
-      
-=======
         </div>
       }>
         <SearchResults />
       </Suspense>
->>>>>>> 5e20af95ad9b7e572345693e5c9a85d7a0d8588e
       <Footer />
     </div>
   );
