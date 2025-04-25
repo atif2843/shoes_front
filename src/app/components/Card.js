@@ -117,11 +117,24 @@ export default function Card({ product }) {
         )}
       </div>
 
-      <div className="p-4 flex-1 flex flex-col">
+      <div className="p-4 flex-1 flex flex-col flex-wrap">
         <div className="relative flex-1">
-          {/* Wishlist Button */}
-          <button 
-            className="absolute top-4 right-2 p-1 bg-white rounded-full shadow hover:bg-gray-50 transition-colors" 
+          {/* Categories */}
+          <div className="flex gap-2 text-xs text-black-500 mt-3 flex-wrap justify-between">
+            <div className="flex gap-2">
+            {product.categories.map((cat, index) => (
+              <span
+                key={index}
+                className="bg-gray-50 px-2 py-1 rounded border-1 border-gray-200"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+          <div>
+           {/* Wishlist Button */}
+           <button 
+            className="p-1 bg-white rounded-full shadow hover:bg-gray-50 transition-colors" 
             name="wishlist"
             onClick={handleWishlistClick}
           >
@@ -134,17 +147,7 @@ export default function Card({ product }) {
               }`}
             />
           </button>
-
-          {/* Categories */}
-          <div className="flex gap-2 text-xs text-black-500 mt-3">
-            {product.categories.map((cat, index) => (
-              <span
-                key={index}
-                className="bg-gray-50 px-2 py-1 rounded border-1 border-gray-200"
-              >
-                {cat}
-              </span>
-            ))}
+          </div>
           </div>
 
           {/* Color Options */}

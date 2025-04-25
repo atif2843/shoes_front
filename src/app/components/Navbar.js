@@ -492,7 +492,15 @@ export default function Navbar() {
           >
             <div className="flex flex-col h-full">
               <div className="flex items-center justify-between p-4 border-b">
-                <span className="text-xl font-bold">Menu</span>
+              <Link href="/">
+              <Image
+              src="/images/logo.png"
+              alt="Logo"
+              title="Logo"
+              width="70"
+              height="70"
+              />
+              </Link>
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="p-2 rounded-md hover:bg-gray-100"

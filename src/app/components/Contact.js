@@ -96,7 +96,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="container mx-auto px-8 py-28 ">
+    <div className="container mx-auto px-8 py-8 ">
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 flex items-center space-x-2 mb-4">
         <span>Home</span> <span className="text-gray-400">/</span>
@@ -187,7 +187,7 @@ export default function Contact() {
           <MapContainer
             center={[19.120324086655422, 72.89253432774979]}
             zoom={12}
-            className="h-full w-full"
+            className="h-full w-full z-0"
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <Marker

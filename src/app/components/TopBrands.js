@@ -82,7 +82,7 @@ export default function TopFavoriteBrands() {
         <div className="flex gap-4">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
-              <div key={product.id} className="min-w-[250px]">
+              <div key={product.id} className="flex-none w-[300px]">
                 <Card 
               key={product.id}
               product={{

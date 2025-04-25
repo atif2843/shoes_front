@@ -62,7 +62,7 @@ export default function NewArrival() {
   }
 
   return (
-    <div className="relative w-full pt-10 px-8 bg-white py-8">
+    <div className="relative w-full pt-10 px-8 bg-white">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
         <h2 className="text-xl font-bold">New Arrivals</h2>
@@ -92,7 +92,7 @@ export default function NewArrival() {
             </button>
           </div>
           <Link
-            href="/new-arrivals"
+            href="/trending"
             className="group flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-800 text-white rounded-md transition-all duration-300 shadow-md hover:shadow-lg"
           >
             <span className="font-medium">View All</span>
@@ -104,22 +104,20 @@ export default function NewArrival() {
         </div>
       </div>
 
+      {/* Embla Carousel */}
       <div className="overflow-hidden py-4" ref={emblaRef}>
         <div className="flex gap-4">
           {products.map((product) => (
             <div key={product.id} className="flex-none w-[300px]">
-              <Card 
-                key={product.id}
-                product={{
-                  ...product,
-                  images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
-                  categories: [product.productType, product.brand],
-                  name: product.name,
-                  slug: product.slug,
-                  price: `₹${product.sellPrice.toLocaleString()}`,
-                  colors: product.color || []
-                }}
-              />
+              <Card product={{
+                ...product,
+                images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
+                categories: [product.productType, product.brand],
+                name: product.name,
+                slug: product.slug,
+                price: `₹${product.sellPrice.toLocaleString()}`,
+                colors: product.color || []
+              }} />
             </div>
           ))}
         </div>
