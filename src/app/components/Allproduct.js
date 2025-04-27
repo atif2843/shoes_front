@@ -72,11 +72,9 @@ export default function AllProducts({ onFilterChange }) {
 
     // Apply search filter
     if (searchQuery) {
-      
       result = result.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
-     
     }
 
     // Apply selected filters
@@ -89,8 +87,6 @@ export default function AllProducts({ onFilterChange }) {
         acc[filter.type].push(filter.value);
         return acc;
       }, {});
-
-      console.log('Grouped filters:', groupedFilters);
 
       result = result.filter(product => {
         const matches = Object.entries(groupedFilters).every(([type, values]) => {
@@ -106,37 +102,27 @@ export default function AllProducts({ onFilterChange }) {
                   : (product.size?.split(',') || []).map(s => s.trim());
                 
                 // Check if any of the product's sizes match the selected size
-                const productMatch = productSizes.some(size => size === selectedSize);
-                console.log(`Size check: [${productSizes.join(', ')}] includes ${selectedSize} = ${productMatch}`);
-                return productMatch;
+                return productSizes.some(size => size === selectedSize);
               });
               break;
             case "color":
               match = values.some(color => {
-                const productMatch = product.color === color.toLowerCase();
-                console.log(`Color check: ${product.color} === ${color} = ${productMatch}`);
-                return productMatch;
+                return product.color === color.toLowerCase();
               });
               break;
             case "brand":
               match = values.some(brand => {
-                const productMatch = product.brand?.toLowerCase() === brand.toLowerCase();
-                console.log(`Brand check: ${product.brand} === ${brand} = ${productMatch}`);
-                return productMatch;
+                return product.brand?.toLowerCase() === brand.toLowerCase();
               });
               break;
             case "gender":
               match = values.some(gender => {
-                const productMatch = product.gender?.toLowerCase() === gender.toLowerCase();
-                console.log(`Gender check: ${product.gender} === ${gender} = ${productMatch}`);
-                return productMatch;
+                return product.gender?.toLowerCase() === gender.toLowerCase();
               });
               break;
             case "productType":
               match = values.some(type => {
-                const productMatch = product.productType?.toLowerCase() === type.toLowerCase();
-                console.log(`ProductType check: ${product.productType} === ${type} = ${productMatch}`);
-                return productMatch;
+                return product.productType?.toLowerCase() === type.toLowerCase();
               });
               break;
             case "price":
@@ -148,9 +134,7 @@ export default function AllProducts({ onFilterChange }) {
                 if (maxStr && maxStr.includes("and above")) {
                   const min = Number(minStr);
                   const productPrice = Number(product.sellPrice);
-                  const priceMatch = productPrice >= min;
-                  console.log(`Price check: ${productPrice} >= ${min} = ${priceMatch}`);
-                  return priceMatch;
+                  return productPrice >= min;
                 }
                 
                 // Handle normal range case
@@ -159,29 +143,21 @@ export default function AllProducts({ onFilterChange }) {
                 const productPrice = Number(product.sellPrice);
                 
                 // Ensure we're comparing numbers, not strings
-                const priceMatch = !isNaN(min) && !isNaN(max) && 
+                return !isNaN(min) && !isNaN(max) && 
                   productPrice >= min && productPrice <= max;
-                
-                console.log(`Price check: ${productPrice} in range ${min}-${max} = ${priceMatch}`);
-                return priceMatch;
               });
               break;
             default:
               return true;
           }
-          console.log(`Product ${product.id} - ${type} match: ${match}`);
           return match;
         });
 
-        console.log(`Product ${product.id} final match: ${matches}`);
         return matches;
       });
-
-      console.log('Products after filtering:', result.length);
     }
 
     // Apply sorting
-    console.log('Applying sort:', sortOption);
     result.sort((a, b) => {
       if (sortOption === "price-low") return a.sellPrice - b.sellPrice;
       if (sortOption === "price-high") return b.sellPrice - a.sellPrice;
@@ -190,12 +166,10 @@ export default function AllProducts({ onFilterChange }) {
       return 0;
     });
 
-    console.log('Final filtered products count:', result.length);
     setFilteredProducts(result);
   }, [allProducts, searchQuery, sortOption, filters]);
 
   const handleApplyFilters = (appliedFilters) => {
-    console.log('Applying new filters:', appliedFilters);
     // Only update filters if they've actually changed
     if (JSON.stringify(filters) !== JSON.stringify(appliedFilters)) {
       setFilters(appliedFilters);
@@ -203,7 +177,6 @@ export default function AllProducts({ onFilterChange }) {
   };
 
   const handleClearFilters = () => {
-    console.log('Clearing all filters');
     setFilters([]);
     setSearchQuery("");
     setSortOption("price-low");
@@ -211,7 +184,6 @@ export default function AllProducts({ onFilterChange }) {
   };
 
   const handleRemoveFilter = (filterToRemove) => {
-    console.log('Removing filter:', filterToRemove);
     // Remove the filter from the filters array
     const updatedFilters = filters.filter(filter => 
       !(filter.type === filterToRemove.type && filter.value === filterToRemove.value)
@@ -244,8 +216,6 @@ export default function AllProducts({ onFilterChange }) {
 
   return (
     <div className="flex flex-col space-y-4 py-10 px-8 bg-white">
-      
-
       {/* Search, Sort & Filter Controls */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 w-full">
         <div className="relative w-full md:w-2/4">
@@ -300,15 +270,18 @@ export default function AllProducts({ onFilterChange }) {
           {filteredProducts.length} {filteredProducts.length === 1 ? 'Result' : 'Results'} Showing
         </span>
         {filters.map((filter, index) => (
-          <button onClick={() => handleRemoveFilter(filter)}
-          className="cursor-pointer"
+          <button 
+            key={`filter-${index}`}
+            onClick={() => handleRemoveFilter(filter)}
+            className="cursor-pointer"
           >
-          <span key={index} className="bg-gray-200 px-3 py-1 rounded-full relative">
-            {filter.label}
-            <X size={16}
-            className="absolute -right-1 -top-1 text-gray-500 rounded-full bg-red-500 p-1 text-white"
-            />
-          </span>
+            <span className="bg-gray-200 px-3 py-1 rounded-full relative">
+              {filter.label}
+              <X 
+                size={16}
+                className="absolute -right-1 -top-1 text-gray-500 rounded-full bg-red-500 p-1 text-white"
+              />
+            </span>
           </button>
         ))}
         {filters.length > 0 && (
