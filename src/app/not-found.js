@@ -22,7 +22,7 @@ export default function NotFound() {
         <div className="w-24 h-1 bg-cyan-600 mx-auto mb-6"></div>
         <h2 className="text-3xl font-semibold text-gray-800 mb-4">Oops! These shoes don&apos;t fit</h2>
         <p className="text-gray-600 mb-8">
-          The page you're looking for seems to have walked away. Don&apos;t worry, we have plenty of other styles for you to explore.
+          The page you&apos;re looking for seems to have walked away. Don&apos;t worry, we have plenty of other styles for you to explore.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
