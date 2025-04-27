@@ -239,3 +239,13 @@ body {
     display: flex;
   }
 }
+
+/* Custom styles for search page */
+.search-page .transition-\[height\] {
+  height: 72px !important;
+}
+
+/* Adjust spacing for search results container */
+.search-results-container {
+  margin-top: -48px;
+}

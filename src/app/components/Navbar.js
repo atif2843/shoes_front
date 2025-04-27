@@ -197,18 +197,17 @@ export default function Navbar() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchResults.length > 0) {
-      // Navigate to the first result or implement your search results page
-      console.log("Searching for:", searchQuery);
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchOpen(false);
     }
-    setSearchOpen(false);
   };
 
   const NavItems = {
     NewArrivals: "/new-arrivals",
     Trending: "/trending",
     Brands: "/brands",
-    About: "/about",
+    Products: "/products",
     Contact: "/contact",
   };
 
@@ -292,37 +291,41 @@ export default function Navbar() {
               {searchOpen && (
                 <div
                   ref={searchRef}
-                  className="absolute top-full left-0 right-0 bg-white shadow-lg w-full min-h-screen sm:min-h-0 z-50"
+                  className="absolute top-full right-0 bg-white shadow-lg w-full sm:w-96 z-50 m-0 rounded-b-lg border border-gray-200"
                 >
-                  <form onSubmit={handleSearch} className="max-w-md mx-auto px-4 sm:px-0 pb-4">
-                    <div className="sticky top-0 pt-4 pb-3 bg-white z-10">
-                      <div className="relative">
-                        <Search
-                          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                          size={18}
-                        />
-                        <input
-                          type="text"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder="Search products..."
-                          className="w-full pl-10 pr-12 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500 text-base"
-                          autoFocus
-                        />
-                        {searchQuery && (
-                          <button
-                            onClick={() => {
-                              setSearchQuery('');
-                              setSearchResults([]);
-                            }}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                          >
-                            Clear ×
-                          </button>
-                        )}
-                      </div>
+                  <form onSubmit={handleSearch} className="p-4">
+                    <div className="relative">
+                      <Search
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                        size={18}
+                      />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleSearch(e);
+                          }
+                        }}
+                        placeholder="Search products..."
+                        className="w-full pl-10 pr-12 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500 text-base"
+                        autoFocus
+                      />
+                      {searchQuery && (
+                        <button
+                          onClick={() => {
+                            setSearchQuery('');
+                            setSearchResults([]);
+                          }}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        >
+                          Clear ×
+                        </button>
+                      )}
                     </div>
-
+                    
                     {searchQuery.length >= 2 && (
                       <div className="mt-2">
                         {searchQuery && <div className="text-sm text-gray-500 mb-3 px-1">Searching</div>}
@@ -333,9 +336,9 @@ export default function Navbar() {
                           </div>
                         ) : searchResults.length > 0 ? (
                           <div className="flex flex-col h-full">
-                            <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)] sm:max-h-[320px]">
+                            <div className="flex-1 overflow-y-auto max-h-[320px]">
                               <div className="space-y-3 pb-3">
-                                {searchResults.slice(0, 10).map((product) => (
+                                {searchResults.slice(0, 5).map((product) => (
                                   <Link
                                     key={product.id}
                                     href={`/products/${product.slug}`}

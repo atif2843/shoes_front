@@ -62,7 +62,7 @@ export default function NewArrival() {
   }
 
   return (
-    <div className="relative w-full pt-10 px-8 bg-white">
+    <div className="relative w-full px-8 bg-white py-8">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
         <h2 className="text-xl font-bold">New Arrivals</h2>

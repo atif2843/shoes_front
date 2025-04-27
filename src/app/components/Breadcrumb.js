@@ -28,7 +28,7 @@ export default function Breadcrumb() {
     });
 
   return (
-    <nav className="bg-white py-3 px-4 sm:px-6 lg:px-8 border-b">
+    <nav className="bg-white py-3 px-4 sm:px-8 lg:px-8 border-b pt-8">
       <div className="max-w-7xl mx-auto">
         <ol className="flex flex-wrap items-center gap-2 text-sm">
           <li className="flex-shrink-0">

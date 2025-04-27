@@ -15,12 +15,36 @@ export default function Card({ product }) {
   const { isLoggedIn, openLoginModal, user, userData } = useAuthStore();
   const [isInWishlistState, setIsInWishlistState] = useState(false);
   const { wishlistItems, addItem, removeItem, fetchWishlist } = useWishlistStore();
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     containScroll: "trimSnaps",
     dragFree: false,
     skipSnaps: false,
   });
+  const [imageError, setImageError] = useState({});
+  const [isWishlistLoading, setIsWishlistLoading] = useState(false);
+
+  // Update selected index when carousel moves
+  const onSelect = useCallback(() => {
+    if (emblaApi) {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    }
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (emblaApi) {
+      onSelect();
+      emblaApi.on("select", onSelect);
+      emblaApi.on("reInit", onSelect);
+    }
+    return () => {
+      if (emblaApi) {
+        emblaApi.off("select", onSelect);
+        emblaApi.off("reInit", onSelect);
+      }
+    };
+  }, [emblaApi, onSelect]);
 
   // Check if product is in wishlist on component mount and when wishlistItems changes
   useEffect(() => {
@@ -28,14 +52,17 @@ export default function Card({ product }) {
       if (isLoggedIn && userData) {
         try {
           const inWishlist = await isInWishlist(userData.id, product.id);
-          setIsInWishlistState(inWishlist);
+          // Only update state if it's different from current state
+          if (inWishlist !== isInWishlistState) {
+            setIsInWishlistState(inWishlist);
+          }
         } catch (error) {
           console.error("Error checking wishlist status:", error);
         }
       }
     };
     checkWishlistStatus();
-  }, [isLoggedIn, userData, product.id, wishlistItems]);
+  }, [isLoggedIn, userData, product.id, wishlistItems, isInWishlistState]);
 
   // Ensure images is an array and has at least one image
   const images =
@@ -49,6 +76,15 @@ export default function Card({ product }) {
     setTimeout(() => setIsAdding(false), 1000);
   };
 
+  // Handle image loading errors
+  const handleImageError = (index) => {
+    setImageError(prev => ({
+      ...prev,
+      [index]: true
+    }));
+  };
+
+  // Improved wishlist handling
   const handleWishlistClick = async () => {
     if (!isLoggedIn) {
       openLoginModal();
@@ -56,6 +92,7 @@ export default function Card({ product }) {
     }
 
     try {
+      setIsWishlistLoading(true);
       if (!userData) {
         toast.error("User data not found. Please try logging in again.");
         return;
@@ -71,11 +108,12 @@ export default function Card({ product }) {
         toast.success("Added to wishlist");
       }
 
-      // Refresh wishlist data
       await fetchWishlist(userData.id);
     } catch (error) {
       console.error("Wishlist operation failed:", error);
       toast.error("Failed to update wishlist. Please try again.");
+    } finally {
+      setIsWishlistLoading(false);
     }
   };
 
@@ -88,11 +126,19 @@ export default function Card({ product }) {
             {images.map((image, index) => (
               <div key={index} className="flex-[0_0_100%] min-w-0 h-full">
                 <div className="h-full flex items-center justify-center">
-                  <img
-                    src={image}
-                    alt={`${product.name} - Image ${index + 1}`}
-                    className="max-w-full max-h-full w-auto h-auto object-contain hover:scale-105 transition duration-300"
-                  />
+                  {imageError[index] ? (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                      <span className="text-gray-400">Image not available</span>
+                    </div>
+                  ) : (
+                    <img
+                      src={image}
+                      alt={`${product.name} - Image ${index + 1}`}
+                      className="max-w-full max-h-full w-auto h-auto object-contain hover:scale-105 transition duration-300"
+                      loading="lazy"
+                      onError={() => handleImageError(index)}
+                    />
+                  )}
                 </div>
               </div>
             ))}
@@ -107,10 +153,9 @@ export default function Card({ product }) {
                 key={index}
                 onClick={() => emblaApi?.scrollTo(index)}
                 className={`w-2 h-2 rounded-full transition-colors ${
-                  emblaApi?.selectedScrollSnap() === index
-                    ? "bg-black"
-                    : "bg-gray-300"
+                  selectedIndex === index ? "bg-black" : "bg-gray-300"
                 }`}
+                aria-label={`Go to image ${index + 1}`}
               />
             ))}
           </div>
@@ -134,9 +179,11 @@ export default function Card({ product }) {
           <div>
            {/* Wishlist Button */}
            <button 
-            className="p-1 bg-white rounded-full shadow hover:bg-gray-50 transition-colors" 
+            className="p-1 bg-white rounded-full shadow hover:bg-gray-50 transition-colors disabled:opacity-50" 
             name="wishlist"
             onClick={handleWishlistClick}
+            disabled={isWishlistLoading}
+            aria-label={isInWishlistState ? "Remove from wishlist" : "Add to wishlist"}
           >
             <Heart
               size={18}
@@ -144,7 +191,7 @@ export default function Card({ product }) {
                 isInWishlistState 
                   ? "text-red-500 fill-red-500" 
                   : "text-gray-500 hover:text-red-500 transition hover:fill-red-500"
-              }`}
+              } ${isWishlistLoading ? "animate-pulse" : ""}`}
             />
           </button>
           </div>

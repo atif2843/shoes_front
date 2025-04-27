@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Search, ListFilter, ChevronDown, ChevronRight } from "lucide-react";
+import { Search, ListFilter, ChevronDown, ChevronRight, X } from "lucide-react";
 import supabase from "@/app/api/auth/supabaseClient";
 import Card from "./Card";
 import FilterSidebar from "./FilterSidebar";
 
-export default function AllProducts() {
+export default function AllProducts({ onFilterChange }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("price-low");
   const [filters, setFilters] = useState([]);
@@ -200,7 +200,10 @@ export default function AllProducts() {
 
   const handleApplyFilters = (appliedFilters) => {
     console.log('Applying new filters:', appliedFilters);
-    setFilters(appliedFilters);
+    // Only update filters if they've actually changed
+    if (JSON.stringify(filters) !== JSON.stringify(appliedFilters)) {
+      setFilters(appliedFilters);
+    }
   };
 
   const handleClearFilters = () => {
@@ -209,6 +212,20 @@ export default function AllProducts() {
     setSearchQuery("");
     setSortOption("price-low");
     setFilteredProducts(allProducts);
+  };
+
+  const handleRemoveFilter = (filterToRemove) => {
+    console.log('Removing filter:', filterToRemove);
+    // Remove the filter from the filters array
+    const updatedFilters = filters.filter(filter => 
+      !(filter.type === filterToRemove.type && filter.value === filterToRemove.value)
+    );
+    setFilters(updatedFilters);
+    
+    // Update the filter sidebar state
+    if (typeof onFilterChange === 'function') {
+      onFilterChange(updatedFilters);
+    }
   };
 
   const handleLoadMore = () => setVisibleProducts((prev) => prev + 25);
@@ -231,14 +248,10 @@ export default function AllProducts() {
 
   return (
     <div className="flex flex-col space-y-4 py-10 px-8 bg-white">
-      {/* Breadcrumb */}
-      <div className="text-sm text-gray-500 flex items-center space-x-2">
-        Home <ChevronRight className="h-4" />
-        <span className="text-black font-medium">View All</span>
-      </div>
+      
 
       {/* Search, Sort & Filter Controls */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-around space-y-3 md:space-y-0 w-full">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 w-full">
         <div className="relative w-full md:w-2/4">
           <Search className="absolute left-3 top-3 text-gray-400" size={18} />
           <input
@@ -282,22 +295,30 @@ export default function AllProducts() {
         onClose={() => setIsFilterOpen(false)}
         onApply={handleApplyFilters}
         onClear={handleClearFilters}
+        activeFilters={filters}
       />
 
       {/* Filters & Tags */}
       <div className="flex flex-wrap items-center justify-center space-x-2 text-sm">
-        <span className="font-medium">
+        <span className="font-medium flex items-left block w-full">
           {filteredProducts.length} {filteredProducts.length === 1 ? 'Result' : 'Results'} Showing
         </span>
         {filters.map((filter, index) => (
-          <span key={index} className="bg-gray-200 px-3 py-1 rounded-full">
+          <button onClick={() => handleRemoveFilter(filter)}
+          className="cursor-pointer"
+          >
+          <span key={index} className="bg-gray-200 px-3 py-1 rounded-full relative">
             {filter.label}
+            <X size={16}
+            className="absolute -right-1 -top-1 text-gray-500 rounded-full bg-red-500 p-1 text-white"
+            />
           </span>
+          </button>
         ))}
         {filters.length > 0 && (
           <button
             onClick={handleClearFilters}
-            className="text-red-500 text-sm ml-2"
+            className="border border-gray-300 rounded-full px-3 py-1 bg-red-500 text-white hover:bg-red-600"
           >
             Clear Filters ✖
           </button>
