@@ -68,19 +68,15 @@ export default function AllProducts({ onFilterChange }) {
   useEffect(() => {
     if (!Array.isArray(allProducts)) return;
 
-    console.log('Starting filter process...');
-    console.log('Current filters:', filters);
-    console.log('Total products:', allProducts.length);
-
     let result = [...allProducts];
 
     // Apply search filter
     if (searchQuery) {
-      console.log('Applying search filter:', searchQuery);
+      
       result = result.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      console.log('Products after search:', result.length);
+     
     }
 
     // Apply selected filters
