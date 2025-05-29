@@ -89,8 +89,7 @@ export default function BrandProductList({
                 image: product.productImages?.[0]?.prod_images || '/images/placeholder.png',
                 categories: [product.productType, product.brand],
                 name: product.name,
-                price: `₹${product.sellPrice || product.price}`,
-                colors: product.color || []
+                price: `₹${product.sellPrice || product.price}`
               }} 
             />
           ))

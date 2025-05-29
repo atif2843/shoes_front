@@ -96,8 +96,7 @@ export default function SearchResults() {
                 categories: [product.productType, product.brand],
                 name: product.name,
                 slug: product.slug,
-                price: `₹${product.sellPrice?.toLocaleString() || '0'}`,
-                colors: product.color || []
+                price: `₹${product.sellPrice?.toLocaleString() || '0'}`
               }}
             />
           ))}

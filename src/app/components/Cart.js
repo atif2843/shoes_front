@@ -49,18 +49,25 @@ export default function Cart() {
     fetchUserData();
   }, [user_id]);
   
+  // Ensure isLoading is set to false when the cart is opened
+  useEffect(() => {
+    if (isOpen) {
+      setIsLoading(false);
+    }
+  }, [isOpen]);
+  
   const handleClose = () => {
     setIsOpen(false);
   };
   
   const handleQuantityChange = (item, newQuantity) => {
     if (newQuantity > 0) {
-      updateQuantity(item.id, item.selectedSize, item.selectedColor, newQuantity);
+      updateQuantity(item.id, item.selectedSize, newQuantity);
     }
   };
   
   const handleRemoveItem = (item) => {
-    removeItem(item.id, item.selectedSize, item.selectedColor);
+    removeItem(item.id, item.selectedSize);
   };
   
   const generateOrderId = () => {
@@ -120,7 +127,6 @@ export default function Cart() {
       const orderItems = items.map(item => ({
         name: item.name,
         size: item.selectedSize,
-        color: item.selectedColor,
         price: item.price.toLocaleString(),
         qty: item.quantity,
         order_id: newOrderId,
@@ -161,6 +167,20 @@ export default function Cart() {
     window.open(`https://wa.me/919820313746?text=${encodedMessage}`, '_blank');
   };
   
+  // Ensure isLoading is set to false after cart operations
+  const handleAddToCart = (item) => {
+    setIsLoading(true);
+    try {
+      updateQuantity(item.id, item.selectedSize, item.quantity + 1);
+      toast.success("Product added to cart");
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      toast.error("Failed to add product to cart");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   return (
     <>
       <div className={`fixed inset-0 z-50 ${isOpen ? "block" : "hidden"}`}>
@@ -190,7 +210,7 @@ export default function Cart() {
                 <>
                   <div className="p-4 overflow-y-auto flex-1">
                     {items.map((item, index) => (
-                      <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4 mb-4 pb-4 border-b">
+                      <div key={`${item.id}-${item.selectedSize}`} className="flex gap-4 mb-4 pb-4 border-b">
                         <div className="relative w-20 h-20">
                           <Image
                             src={item.image}
@@ -203,7 +223,7 @@ export default function Cart() {
                         <div className="flex-1">
                           <h3 className="font-medium">{item.name}</h3>
                           <p className="text-sm text-gray-500">
-                            Size: {item.selectedSize} | Color: <span style={{ color: item.selectedColor }}>■</span>
+                            Size: {item.selectedSize}
                           </p>
                           <p className="font-semibold mt-1">₹{item.price.toLocaleString()}</p>
                           <div className="flex items-center mt-2">
@@ -239,7 +259,7 @@ export default function Cart() {
                     </div>
                     <div className="flex gap-2">
                       <Button 
-                        className="flex-1 bg-gray-200 text-black"
+                        className="flex-1 bg-gray-200 text-black hover:text-white"
                         onClick={clearCart}
                       >
                         Clear Cart

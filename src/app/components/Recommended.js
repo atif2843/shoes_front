@@ -43,7 +43,6 @@ export default function Recommended({ products = [], currentProductId }) {
       brandSlug: product.brand?.toLowerCase().replace(/\s+/g, '-') || '',
       categories: [product.productType || '', product.brand || ''],
       images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
-      colors: product.color || [],
       image: product.productImages?.[0]?.prod_images || '/images/placeholder.png',
       sellPrice: product.sellPrice?.toLocaleString() || 0,
       originalPrice: product.originalPrice || null,

@@ -39,14 +39,12 @@ export default function AllProducts({ onFilterChange }) {
           brand: product.brand,
           sellPrice: product.sellPrice,
           slug: product.slug,
-          color: product.color,
           size: product.size,
           gender: product.gender,
           productType: product.productType,
           images: product.productImages?.map(img => img.prod_images) || ['/images/placeholder.png'],
           categories: [product.productType, product.brand],
           price: `₹${product.sellPrice.toLocaleString()}`,
-          colors: product.color || []
         }));
 
         setAllProducts(transformedProducts || []);
@@ -103,11 +101,6 @@ export default function AllProducts({ onFilterChange }) {
                 
                 // Check if any of the product's sizes match the selected size
                 return productSizes.some(size => size === selectedSize);
-              });
-              break;
-            case "color":
-              match = values.some(color => {
-                return product.color === color.toLowerCase();
               });
               break;
             case "brand":

@@ -16,15 +16,14 @@ const useCartStore = create(
       setIsOpen: (isOpen) => set({ isOpen }),
       
       // Add item to cart
-      addItem: (product, selectedSize, selectedColor, quantity) => {
+      addItem: (product, selectedSize, quantity) => {
         const { items } = get();
         
         // Check if the item with the same size and color already exists
         const existingItemIndex = items.findIndex(
           item => 
             item.id === product.id && 
-            item.selectedSize === selectedSize && 
-            item.selectedColor === selectedColor
+            item.selectedSize === selectedSize 
         );
         
         if (existingItemIndex >= 0) {
@@ -44,7 +43,6 @@ const useCartStore = create(
             price: product.sellPrice,
             image: product.images[0],
             selectedSize,
-            selectedColor,
             quantity,
             slug: product.slug
           };
@@ -57,13 +55,12 @@ const useCartStore = create(
       },
       
       // Remove item from cart
-      removeItem: (itemId, selectedSize, selectedColor) => {
+      removeItem: (itemId, selectedSize) => {
         const { items } = get();
         const itemIndex = items.findIndex(
           item => 
             item.id === itemId && 
-            item.selectedSize === selectedSize && 
-            item.selectedColor === selectedColor
+            item.selectedSize === selectedSize
         );
         
         if (itemIndex >= 0) {
@@ -79,13 +76,12 @@ const useCartStore = create(
       },
       
       // Update item quantity
-      updateQuantity: (itemId, selectedSize, selectedColor, newQuantity) => {
+      updateQuantity: (itemId, selectedSize, newQuantity) => {
         const { items } = get();
         const itemIndex = items.findIndex(
           item => 
             item.id === itemId && 
-            item.selectedSize === selectedSize && 
-            item.selectedColor === selectedColor
+            item.selectedSize === selectedSize
         );
         
         if (itemIndex >= 0) {

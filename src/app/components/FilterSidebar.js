@@ -5,7 +5,6 @@ import supabase from "@/app/api/auth/supabaseClient";
 export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activeFilters = [] }) {
   const [filters, setFilters] = useState({
     size: [],
-    color: [],
     brand: [],
     gender: [],
     productType: [],
@@ -14,7 +13,6 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
 
   const [filterOptions, setFilterOptions] = useState({
     size: [],
-    color: [],
     brand: [],
     gender: [],
     productType: [],
@@ -108,11 +106,23 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
-        const { data: products, error } = await supabase
+        const { data: products, error, status, statusText } = await supabase
           .from("products")
-          .select("size, color, brand, gender, productType, sellPrice");
+          .select("size, brand, gender, productType, sellPrice");
 
-        if (error) throw error;
+        if (error) {
+          console.error("Supabase error fetching filter options:", {
+            error,
+            status,
+            statusText,
+          });
+          return;
+        }
+
+        if (!products || products.length === 0) {
+          console.warn("No products found in the database.");
+          return;
+        }
 
         // Extract unique values for each filter category
         const uniqueSizes = [...new Set(products.flatMap(p => p.size))].sort();
@@ -140,7 +150,7 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
           price: priceRanges,
         });
       } catch (error) {
-        console.error("Error fetching filter options:", error);
+        console.error("Unexpected error fetching filter options:", error);
       }
     };
 

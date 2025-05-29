@@ -64,10 +64,10 @@ export default function Card({ product }) {
     checkWishlistStatus();
   }, [isLoggedIn, userData, product.id, wishlistItems, isInWishlistState]);
 
-  // Ensure images is an array and has at least one image
+  // Ensure only the first image is displayed
   const images =
     Array.isArray(product.images) && product.images.length > 0
-      ? product.images
+      ? [product.images[0]] // Only take the first image
       : [product.image || "/images/placeholder.png"];
 
   const handleAddToCart = () => {
@@ -120,8 +120,10 @@ export default function Card({ product }) {
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition w-full max-w-xs h-[500px] flex flex-col">
       {/* Product Image with Wishlist Icon */}
+      <Link href={`/products/${product.slug}`}>
       <div className="relative border-1 border-gray-200 rounded-lg flex justify-center h-[300px]">
         <div className="overflow-hidden w-full h-full" ref={emblaRef}>
+           
           <div className="flex h-full">
             {images.map((image, index) => (
               <div key={index} className="flex-[0_0_100%] min-w-0 h-full">
@@ -144,22 +146,6 @@ export default function Card({ product }) {
             ))}
           </div>
         </div>
-
-        {/* Navigation Dots */}
-        {images.length > 1 && (
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => emblaApi?.scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  selectedIndex === index ? "bg-black" : "bg-gray-300"
-                }`}
-                aria-label={`Go to image ${index + 1}`}
-              />
-            ))}
-          </div>
-        )}
       </div>
 
       <div className="p-4 flex-1 flex flex-col flex-wrap">
@@ -197,34 +183,24 @@ export default function Card({ product }) {
           </div>
           </div>
 
-          {/* Color Options */}
-          {product.colors && product.colors.length > 0 && (
-            <div className="flex gap-2 mt-2">
-              {product.colors.map((color, index) => (
-                <span
-                  key={index}
-                  className="w-4 h-4 rounded-full border border-gray-300"
-                  style={{ backgroundColor: color }}
-                ></span>
-              ))}
-            </div>
-          )}
-
           {/* Product Details */}
           <div className="">
             <div className="flex flex-col justify-between">
-              <Link href={`/products/${product.slug}`}>
-                <h3 className="text-sm font-semibold mt-2 line-clamp-2">
+             
+                <h3 className="text-sm font-semibold mt-2 overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]">
                   {product.name}
                 </h3>
-              </Link>
+              
               <p className="text-lg font-bold text-gray-800 mt-1">
                 {product.price.toLocaleString()}
               </p>
             </div>
           </div>
+             
         </div>
       </div>
+       </Link>
     </div>
+
   );
 }

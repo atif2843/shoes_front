@@ -64,8 +64,7 @@ export default function SportsPage() {
               categories: [product.productType, product.brand],
               name: product.name,
               slug: product.slug,
-              price: `₹${product.sellPrice.toLocaleString()}`,
-              colors: product.color || []
+              price: `₹${product.sellPrice.toLocaleString()}`
             }}
           />
         ))}

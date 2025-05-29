@@ -150,7 +150,6 @@ export async function getProductBySlug(slug) {
       brand: data.brand || '',
       gender: data.gender || '',
       productType: data.productType || '',
-      color: data.color || [],
       size: data.size || [],
       stock: data.stock || 0,
       description: data.description || '',
@@ -446,10 +445,6 @@ export async function getProductDetails(slug) {
       sizes: product.sizes?.map(size => ({
         size: size.size,
         stock: size.stock
-      })) || [],
-      colors: product.colors?.map(color => ({
-        name: color.color_name,
-        code: color.color_code
       })) || []
     };
 

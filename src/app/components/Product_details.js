@@ -10,21 +10,24 @@ import {
   ShoppingBag,
   Lock,
   ChevronDown,
+  SearchCode,
 } from "lucide-react";
 import useCartStore from "@/store/useCartStore";
 import useWishlistStore from "@/store/useWishlistStore";
 import useAuthStore from "@/store/useAuthModal";
 import { isInWishlist } from "@/app/api/supabaseQueries";
 import { toast } from "sonner";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export default function ProductDetail({ product }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
   const [isInWishlistState, setIsInWishlistState] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isDetailsOpen, setIsDetailsOpen] = useState(true);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
   
   const addItem = useCartStore(state => state.addItem);
   const { isLoggedIn, openLoginModal, userData } = useAuthStore();
@@ -61,12 +64,12 @@ export default function ProductDetail({ product }) {
   };
   
   const handleAddToCart = () => {
-    if (!selectedSize || !selectedColor) {
-      toast.error("Please select both size and color");
+    if (!selectedSize) {
+      toast.error("Please select size");
       return;
     }
     
-    addItem(product, selectedSize, selectedColor, quantity);
+    addItem(product, selectedSize, quantity);
     toast.success(`${quantity} ${quantity > 1 ? 'items' : 'item'} added to cart`);
   };
 
@@ -101,7 +104,15 @@ export default function ProductDetail({ product }) {
   };
   
   // Check if both size and color are selected
-  const isAddToCartDisabled = !selectedSize || !selectedColor;
+  const isAddToCartDisabled = !selectedSize;
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % product.images.length);
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + product.images.length) % product.images.length);
+  };
   
   return (
     <div className="container mx-auto py-4 px-8 ">
@@ -115,8 +126,40 @@ export default function ProductDetail({ product }) {
               alt="Product Image"
               layout="fill"
               objectFit="contain"
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-102 transition-transform"
             />
+            <Dialog>
+              <DialogTitle className="sr-only">{product.name}</DialogTitle>
+              <DialogTrigger asChild>
+                <button
+                  className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md"
+                >
+                  <SearchCode  size={24} />
+                </button>
+              </DialogTrigger>
+              <DialogContent>
+                <div className="relative w-full h-[400px]">
+                  <Image
+                    src={product.images[currentSlide]}
+                    alt={`Slide ${currentSlide}`}
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                  <button
+                    className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
+                    onClick={handlePrevSlide}
+                  >
+                    &lt;
+                  </button>
+                  <button
+                    className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
+                    onClick={handleNextSlide}
+                  >
+                    &gt;
+                  </button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="flex gap-2 mt-4 justify-center">
             {product.images.map((img, idx) => (
@@ -160,25 +203,6 @@ export default function ProductDetail({ product }) {
             )}
           </p>
 
-          {/* Colors */}
-          <div className="mt-6">
-            <h2 className="text-sm font-medium">Available Colors</h2>
-            <div className="flex gap-2 mt-2">
-              {product.color && product.color.map((color, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedColor(color)}
-                  className={`w-8 h-8 rounded-full border-2 ${
-                    selectedColor === color ? "outline outline-2 outline-blue-500" : "border-gray-300"
-                  }`}
-                  style={{ backgroundColor: color }}
-                  aria-label={`Select color ${color}`}
-                />
-              ))}
-            </div>
-          
-          </div>
-
           {/* Size Selection */}
           <div className="mt-4">
             <h2 className="text-sm font-medium">Select Shoe Size</h2>
@@ -200,14 +224,7 @@ export default function ProductDetail({ product }) {
             
           </div>
 
-          {/* Selection Summary */}
-          {isAddToCartDisabled && (
-            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-              <p className="text-sm text-yellow-700">
-                Please select both a color and size to add this item to your cart
-              </p>
-            </div>
-          )}
+    
 
           {/* Buttons */}
           <div className="mt-6 flex items-center gap-4">
