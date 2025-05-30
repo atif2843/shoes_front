@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import Image from 'next/image';
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -56,8 +57,10 @@ export default function Carousel({ images }) {
                   className="relative w-full"
                   style={{ paddingBottom: "100%" }}
                 >
-                  <img
+                  <Image
                     src={src}
+                    height="100"
+                    width="100"
                     alt={`Slide ${index}`}
                     className="absolute inset-0 w-full h-full object-cover"
                     loading={index === 0 ? "eager" : "lazy"}
@@ -71,7 +74,9 @@ export default function Carousel({ images }) {
                   className="relative w-full"
                   style={{ paddingBottom: "50%" }}
                 >
-                  <img
+                  <Image
+                    height="100"
+                    width="100"
                     src={src}
                     alt={`Slide ${index}`}
                     className="absolute inset-0 w-full h-full object-cover"
@@ -117,12 +122,7 @@ export default function Carousel({ images }) {
             <div className="custom-pagination"></div>
           </div>
         </div>
-        
-        {/* Navigation buttons - hidden on mobile */}
-        <div className="hidden md:block">
-          <div className="swiper-button-prev"></div>
-          <div className="swiper-button-next"></div>
-        </div>
+              
       </div>
     </div>
   );

@@ -19,89 +19,6 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
     price: [],
   });
 
-  // Function to get a contrasting text color based on background color
-  const getContrastColor = (hexColor) => {
-    // Remove the # if present
-    const color = hexColor.replace('#', '');
-    
-    // Convert to RGB
-    const r = parseInt(color.substr(0, 2), 16);
-    const g = parseInt(color.substr(2, 2), 16);
-    const b = parseInt(color.substr(4, 2), 16);
-    
-    // Calculate luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    
-    // Return black or white based on luminance
-    return luminance > 0.5 ? '#000000' : '#FFFFFF';
-  };
-
-  // Function to format color for display
-  const formatColor = (color) => {
-    // Handle hex colors
-    if (color.startsWith('#')) {
-      return color;
-    }
-    
-    // Handle named colors
-    const colorMap = {
-      'red': '#FF0000',
-      'blue': '#0000FF',
-      'green': '#008000',
-      'yellow': '#FFFF00',
-      'black': '#000000',
-      'white': '#FFFFFF',
-      'purple': '#800080',
-      'orange': '#FFA500',
-      'pink': '#FFC0CB',
-      'brown': '#A52A2A',
-      'gray': '#808080',
-      'grey': '#808080',
-      'navy': '#000080',
-      'beige': '#F5F5DC',
-      'tan': '#D2B48C',
-      'khaki': '#F0E68C',
-      'maroon': '#800000',
-      'olive': '#808000',
-      'teal': '#008080',
-      'turquoise': '#40E0D0',
-      'gold': '#FFD700',
-      'silver': '#C0C0C0',
-      'bronze': '#CD7F32',
-      'copper': '#B87333',
-      'rose': '#FF007F',
-      'lime': '#00FF00',
-      'aqua': '#00FFFF',
-      'fuchsia': '#FF00FF',
-      'indigo': '#4B0082',
-      'violet': '#8F00FF',
-      'coral': '#FF7F50',
-      'crimson': '#DC143C',
-      'lavender': '#E6E6FA',
-      'mint': '#98FF98',
-      'peach': '#FFDAB9',
-      'plum': '#DDA0DD',
-      'salmon': '#FA8072',
-      'seafoam': '#98FF98',
-      'slate': '#708090',
-      'steel': '#4682B4',
-      'wine': '#722F37',
-    };
-    
-    // Check if it's a named color
-    const lowerColor = color.toLowerCase();
-    if (colorMap[lowerColor]) {
-      return colorMap[lowerColor];
-    }
-    
-    // If it's already a hex color without the #, add it
-    if (/^[0-9A-Fa-f]{6}$/.test(color)) {
-      return `#${color}`;
-    }
-    
-    // Return the original color if we can't format it
-    return color;
-  };
 
   useEffect(() => {
     const fetchFilterOptions = async () => {
@@ -126,7 +43,6 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
 
         // Extract unique values for each filter category
         const uniqueSizes = [...new Set(products.flatMap(p => p.size))].sort();
-        const uniqueColors = [...new Set(products.flatMap(p => p.color))].sort();
         const uniqueBrands = [...new Set(products.map(p => p.brand))].sort();
         const uniqueGenders = [...new Set(products.map(p => p.gender))].sort();
         const uniqueProductTypes = [...new Set(products.map(p => p.productType))].sort();
@@ -143,7 +59,6 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
 
         setFilterOptions({
           size: uniqueSizes,
-          color: uniqueColors,
           brand: uniqueBrands,
           gender: uniqueGenders,
           productType: uniqueProductTypes,
@@ -164,7 +79,6 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
     
     const newFilters = {
       size: [],
-      color: [],
       brand: [],
       gender: [],
       productType: [],
@@ -200,7 +114,6 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
   const handleClear = () => {
     setFilters({
       size: [],
-      color: [],
       brand: [],
       gender: [],
       productType: [],
@@ -259,49 +172,6 @@ export default function FilterSidebar({ isOpen, onClose, onApply, onClear, activ
             </div>
           </div>
 
-          {/* Color Filter */}
-          <div>
-            <h3 className="font-medium mb-2">Color ({filters.color?.length || 0})</h3>
-            <div className="grid grid-cols-2 gap-2">
-              {filterOptions.color.map((color) => {
-                const formattedColor = formatColor(color);
-                const textColor = getContrastColor(formattedColor);
-                
-                return (
-                  <div key={color} className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      id={`color-${color}`}
-                      checked={filters.color?.includes(color)}
-                      onChange={() => handleCheckboxChange("color", color)}
-                      className="rounded border-gray-300"
-                    />
-                    <label htmlFor={`color-${color}`} className="flex items-center">
-                      <div 
-                        className="w-6 h-6 rounded-full flex items-center justify-center" 
-                        style={{ 
-                          backgroundColor: formattedColor, 
-                          border: '1px solid #ddd',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                          position: 'relative'
-                        }}
-                      >
-                        {/* Add a small inner circle for better visibility of light colors */}
-                        <div 
-                          className="w-3 h-3 rounded-full" 
-                          style={{ 
-                            backgroundColor: formattedColor,
-                            border: '1px solid rgba(0,0,0,0.1)'
-                          }}
-                        ></div>
-                      </div>
-                      
-                    </label>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
 
           {/* Brand Filter */}
           <div>

@@ -347,6 +347,7 @@ export async function getNewArrivalsAll(lastId = null, limit = 5) {
       .from('products')
       .select('*, productImages(prod_images)', { count: 'exact' })
       .order('releaseDate', { ascending: false })
+      .order('id', { ascending: false })
       .limit(limit);
 
     // If lastId is provided, fetch products after that ID

@@ -20,7 +20,7 @@ const useAuthStore = create((set) => ({
     try {
       const user = await signInWithGoogle();
       if (user) {
-        console.log("Google sign-in successful:", user.email);
+        //console.log("Google sign-in successful:", user.email);
         
         // Fetch user data from Supabase using email
         const { data, error } = await supabase
@@ -31,11 +31,11 @@ const useAuthStore = create((set) => ({
 
         // Log the full error object for debugging
         if (error) {
-          console.error("Error fetching user data by email:", JSON.stringify(error));
+          //console.error("Error fetching user data by email:", JSON.stringify(error));
           
           // Check if user doesn't exist and create one if needed
           if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
-            console.log("User not found in database, creating new user...");
+            //console.log("User not found in database, creating new user...");
             
             try {
               // Create a new user in Supabase - removed avatar_url field
@@ -52,10 +52,10 @@ const useAuthStore = create((set) => ({
                 .single();
                 
               if (createError) {
-                console.error("Error creating new user:", JSON.stringify(createError));
+                //console.error("Error creating new user:", JSON.stringify(createError));
                 set({ user, isLoggedIn: true, isLoginModalOpen: false });
               } else {
-                console.log("New user created successfully:", newUser);
+                //console.log("New user created successfully:", newUser);
                 set({ 
                   user, 
                   userData: newUser, 
@@ -65,7 +65,7 @@ const useAuthStore = create((set) => ({
                 });
               }
             } catch (createErr) {
-              console.error("Exception during user creation:", createErr);
+              //console.error("Exception during user creation:", createErr);
               set({ user, isLoggedIn: true, isLoginModalOpen: false });
             }
           } else {
@@ -73,7 +73,7 @@ const useAuthStore = create((set) => ({
             set({ user, isLoggedIn: true, isLoginModalOpen: false });
           }
         } else {
-          console.log("User data fetched by email:", data);
+          //console.log("User data fetched by email:", data);
           set({ 
             user, 
             userData: data, 
@@ -84,7 +84,7 @@ const useAuthStore = create((set) => ({
         }
       }
     } catch (error) {
-      console.error("Error in loginWithGoogle:", error);
+      //console.error("Error in loginWithGoogle:", error);
       // Set a basic user state even if there's an error
       set({ isLoggedIn: false, isLoginModalOpen: false });
     }
@@ -101,11 +101,11 @@ const useAuthStore = create((set) => ({
         .single();
 
       if (error) {
-        console.error("Error fetching user data by phone:", JSON.stringify(error));
+        //console.error("Error fetching user data by phone:", JSON.stringify(error));
         
         // Check if user doesn't exist and create one if needed
         if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
-          console.log("User not found in database, creating new user...");
+          //console.log("User not found in database, creating new user...");
           
           try {
             // Create a new user in Supabase
@@ -121,25 +121,25 @@ const useAuthStore = create((set) => ({
               .single();
               
             if (createError) {
-              console.error("Error creating new user:", JSON.stringify(createError));
+              //console.error("Error creating new user:", JSON.stringify(createError));
               return null;
             } else {
-              console.log("New user created successfully:", newUser);
+              //console.log("New user created successfully:", newUser);
               return newUser;
             }
           } catch (createErr) {
-            console.error("Exception during user creation:", createErr);
+            //console.error("Exception during user creation:", createErr);
             return null;
           }
         }
         
         return null;
       } else {
-        console.log("User data fetched by phone:", data);
+        //console.log("User data fetched by phone:", data);
         return data;
       }
     } catch (error) {
-      console.error("Error in loginWithPhone:", error);
+      //console.error("Error in loginWithPhone:", error);
       return null;
     }
   },
@@ -164,11 +164,11 @@ onAuthStateChanged(auth, async (user) => {
           .single();
 
         if (error) {
-          console.error("Error fetching user data by email:", JSON.stringify(error));
+          //console.error("Error fetching user data by email:", JSON.stringify(error));
           
           // Check if user doesn't exist and create one if needed
           if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
-            console.log("User not found in database, creating new user...");
+            //console.log("User not found in database, creating new user...");
             
             try {
               // Create a new user in Supabase - removed avatar_url field
@@ -185,10 +185,10 @@ onAuthStateChanged(auth, async (user) => {
                 .single();
                 
               if (createError) {
-                console.error("Error creating new user:", JSON.stringify(createError));
+                //console.error("Error creating new user:", JSON.stringify(createError));
                 useAuthStore.setState({ user, isLoggedIn: true });
               } else {
-                console.log("New user created successfully:", newUser);
+                //console.log("New user created successfully:", newUser);
                 useAuthStore.setState({ 
                   user,
                   userData: newUser, 
@@ -197,14 +197,14 @@ onAuthStateChanged(auth, async (user) => {
                 });
               }
             } catch (createErr) {
-              console.error("Exception during user creation:", createErr);
+              //console.error("Exception during user creation:", createErr);
               useAuthStore.setState({ user, isLoggedIn: true });
             }
           } else {
             useAuthStore.setState({ user, isLoggedIn: true });
           }
         } else {
-          console.log("User data fetched by email:", data);
+          //console.log("User data fetched by email:", data);
           useAuthStore.setState({ 
             user,
             userData: data, 
@@ -221,11 +221,11 @@ onAuthStateChanged(auth, async (user) => {
           .single();
 
         if (error) {
-          console.error("Error fetching user data by phone:", JSON.stringify(error));
+         // console.error("Error fetching user data by phone:", JSON.stringify(error));
           
           // Check if user doesn't exist and create one if needed
           if (error.code === 'PGRST116' || Object.keys(error).length === 0) { 
-            console.log("User not found in database, creating new user...");
+           // console.log("User not found in database, creating new user...");
             
             try {
               // Create a new user in Supabase
@@ -242,10 +242,10 @@ onAuthStateChanged(auth, async (user) => {
                 .single();
                 
               if (createError) {
-                console.error("Error creating new user:", JSON.stringify(createError));
+               // console.error("Error creating new user:", JSON.stringify(createError));
                 useAuthStore.setState({ user, isLoggedIn: true });
               } else {
-                console.log("New user created successfully:", newUser);
+                //console.log("New user created successfully:", newUser);
                 useAuthStore.setState({ 
                   user,
                   userData: newUser, 
@@ -254,14 +254,14 @@ onAuthStateChanged(auth, async (user) => {
                 });
               }
             } catch (createErr) {
-              console.error("Exception during user creation:", createErr);
+              //console.error("Exception during user creation:", createErr);
               useAuthStore.setState({ user, isLoggedIn: true });
             }
           } else {
             useAuthStore.setState({ user, isLoggedIn: true });
           }
         } else {
-          console.log("User data fetched by phone:", data);
+         // console.log("User data fetched by phone:", data);
           useAuthStore.setState({ 
             user, 
             userData: data, 
@@ -282,7 +282,7 @@ onAuthStateChanged(auth, async (user) => {
               isLoggedIn: true 
             });
           } catch (error) {
-            console.error("Error fetching user data by ID:", error);
+           // console.error("Error fetching user data by ID:", error);
             useAuthStore.setState({ user, isLoggedIn: true });
           }
         } else {
@@ -290,7 +290,7 @@ onAuthStateChanged(auth, async (user) => {
         }
       }
     } catch (error) {
-      console.error("Error in onAuthStateChanged:", error);
+     // console.error("Error in onAuthStateChanged:", error);
       useAuthStore.setState({ user, isLoggedIn: true });
     }
   } else {

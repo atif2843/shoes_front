@@ -100,14 +100,15 @@ export default function Footer() {
           </p>
           <form onSubmit={handleSubscribe} className="mt-3 flex sm:flex-row flex-col items-center flex-wrap">
             <div className="flex w-full sm:w-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your Email"
-                className="p-2 flex-1 text-black rounded-md border border-white/20 outline-0"
-                required
-              />
+            <input
+  type="email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  placeholder="Your Email"
+  className="p-2 flex-1 text-black placeholder-white rounded-md border border-white/20 outline-0"
+  required
+/>
+
               <button 
                 type="submit" 
                 className="bg-white text-black px-4 py-2 rounded-md ml-2"
