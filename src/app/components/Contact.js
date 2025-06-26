@@ -101,7 +101,7 @@ export default function Contact() {
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold text-cyan-700 dark:text-cyan-300 mb-3">Get in Touch</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">We'd love to hear from you!</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">We&apos;d love to hear from you!</p>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Fill out the form below or reach us directly at our office.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
