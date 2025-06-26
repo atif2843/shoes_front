@@ -233,7 +233,7 @@ export default function Navbar() {
     <>
       <header className="fixed top-0 left-0 right-0 z-40 bg-white">
         <nav className={`transform transition-transform duration-500 ease-out ${
-          isMarqueeVisible ? 'translate-y-0' : '-translate-y-[48px]'
+          isMarqueeVisible ? 'translate-y-0' : '-translate-y-0'
         }`}>
           <div className="w-full bg-white">
             <Marquee 

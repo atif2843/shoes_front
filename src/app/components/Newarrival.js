@@ -92,7 +92,7 @@ export default function NewArrival() {
             </button>
           </div>
           <Link
-            href="/trending"
+            href="/new-arrivals"
             className="group flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-800 text-white rounded-md transition-all duration-300 shadow-md hover:shadow-lg"
           >
             <span className="font-medium">View All</span>

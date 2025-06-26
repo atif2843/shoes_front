@@ -60,9 +60,9 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:item-center">
         {/* Brand Info */}
         <div>
-          <h2 className="text-lg font-bold">SUPER JUMP</h2>
+          <h2 className="text-lg font-bold">Kicksneak</h2>
           <p className="text-sm mt-2">
-            Superjump offers this website, including all information, tools, and
+            Kicksneak offers this website, including all information, tools, and
             services available from this site to you, the user, policies, and
             notices stated here.
           </p>
@@ -148,15 +148,12 @@ export default function Footer() {
           <div className="flex items-center space-x-1">
             <Truck size={18} /> <span>Free Delivery</span>
           </div>
-          <div className="flex items-center space-x-1 ">
-            <ShieldCheck size={18} /> <span>100% Genuine</span>
-          </div>
         </div>
       </div>
 
       {/* Footer Bottom Text */}
       <div className="max-w-6xl mx-auto mt-6 text-center text-sm">
-        <span className="font-semibold">Superjump</span> created and maintained
+        <span className="font-semibold">Kicksneak</span> created and maintained
         by <span className="font-semibold">Corpnix</span>
       </div>
 

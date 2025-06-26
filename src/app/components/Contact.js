@@ -96,109 +96,115 @@ export default function Contact() {
   };
 
   return (
-    <div className="container mx-auto px-8 py-8 ">
-      {/* Breadcrumb */}
-      <div className="text-sm text-gray-500 flex items-center space-x-2 mb-4">
-        <span>Home</span> <span className="text-gray-400">/</span>
-        <span className="text-black font-medium">Contact</span>
-      </div>
+    <section className="relative min-h-screen bg-white flex items-center justify-center ">
 
-      {/* Title */}
-      <h1 className="text-3xl font-bold mb-6">Get in Touch</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {formErrors && <div className="mt-4 text-red-500">{formErrors}</div>}
-        {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <label htmlFor="name" className="block font-medium text-black mb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-          <label htmlFor="email" className="block font-medium text-black mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-          <label htmlFor="phone" className="block font-medium text-black mb-1">
-            Phone number
-          </label>
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-          <label
-            htmlFor="message"
-            className="block font-medium text-black mb-1"
-          >
-            Message (Optional)
-          </label>
-          <textarea
-            name="message"
-            placeholder="Message (Optional)"
-            value={formData.message}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-          ></textarea>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-          >
-            Submit
-          </button>
-        </form>
-
-        {/* Address */}
-        <div className="space-y-4 flex md:flex-col justify-between">
-          <div>
-            <h3 className="text-lg font-semibold">Our Address</h3>
-            <p>12th Road, Khar W, Near Madhu Park, Mumbai-400052</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Contact</h3>
-            <p>+91 987-383-4473</p>
-            <p>info@suprjump.com</p>
-          </div>
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mb-10 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-cyan-700 dark:text-cyan-300 mb-3">Get in Touch</h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">We'd love to hear from you!</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Fill out the form below or reach us directly at our office.</p>
         </div>
-      </div>
-
-      {/* Google Maps */}
-      {isClient && (
-        <div className="mt-8 h-96">
-          <MapContainer
-            center={[19.120324086655422, 72.89253432774979]}
-            zoom={12}
-            className="h-full w-full z-0"
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker
-              position={[19.120324086655422, 72.89253432774979]}
-              icon={customMarker}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Contact Form */}
+          <form onSubmit={handleSubmit} className="space-y-7 bg-white/80 dark:bg-gray-900/80 rounded-2xl shadow-lg p-6 md:p-8 border border-cyan-100 dark:border-gray-800">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name" className="font-semibold">Name</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border "
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="font-semibold">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border "
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="phone" className="font-semibold">Phone number</label>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border "
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="message" className="font-semibold">Message (Optional)</label>
+              <textarea
+                name="message"
+                placeholder="Message (Optional)"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border "
+              ></textarea>
+            </div>
+            {formErrors && <div className="text-red-500 text-sm font-medium">{formErrors}</div>}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 rounded-lg shadow-xl transition-all text-lg tracking-wide uppercase"
             >
-              <Popup>Our Mumbai Office</Popup>
-            </Marker>
-          </MapContainer>
+              Submit
+            </button>
+          </form>
+          {/* Address & Map */}
+          <div className="flex flex-col justify-between h-full rounded-2xl bg-white shadow-lg p-6 md:p-8 border">
+            <div className="mb-8 space-y-7">
+              <div className="flex items-center gap-3">
+                <span className="inline-block bg-white p-2 rounded-full">
+                  <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                </span>
+                <div>
+                  <h3 className="text-xl font-semibold">Our Address</h3>
+                  <p className="text-gray-600 dark:text-gray-300">12th Road, Khar W, Near Madhu Park, Mumbai-400052</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="inline-block bg-white p-2 rounded-full">
+                  <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2.08a2 2 0 0 1 1.1-1.79l7-3.11a2 2 0 0 1 1.8 0l7 3.11a2 2 0 0 1 1.1 1.79z"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <div>
+                  <h3 className="text-xl font-semibold">Contact</h3>
+                  <p className="text-gray-600 dark:text-gray-300">+91 987-383-4473</p>
+                  <p className="text-gray-600 dark:text-gray-300">info@suprjump.com</p>
+                </div>
+              </div>
+            </div>
+            {/* Google Maps */}
+            {isClient && (
+              <div className="rounded-xl overflow-hidden shadow-lg border border-cyan-100 dark:border-gray-800 h-64 md:h-72 w-full animate-fadeIn">
+                <MapContainer
+                  center={[19.120324086655422, 72.89253432774979]}
+                  zoom={12}
+                  className="h-full w-full z-0"
+                >
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <Marker
+                    position={[19.120324086655422, 72.89253432774979]}
+                    icon={customMarker}
+                  >
+                    <Popup>Our Mumbai Office</Popup>
+                  </Marker>
+                </MapContainer>
+              </div>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+    </section>
   );
 }
