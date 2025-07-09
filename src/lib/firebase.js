@@ -14,11 +14,11 @@ import supabase from "@/app/api/auth/supabaseClient";
 // Your Firebase configuration (Replace with your credentials)
 const firebaseConfig = {
   apiKey: "AIzaSyAvxLquXzHF_o1IgYGFMJFm3LrXrYJ5u48",
-  authDomain: process.env.NEXT_PUBLIC_FIRE_BASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIRE_BASE_AUTH_DOMAIN,
-  storageBucket: process.env.NEXT_PUBLIC_FIRE_BASE_AUTH_DOMAIN_STORE,
+  authDomain: "shoe-369b4.firebaseapp.com",
+  projectId: "shoe-369b4",
+  storageBucket: "shoe-369b4.firebasestorage.app",
   messagingSenderId: "673024204488",
-  appId: process.env.NEXT_PUBLIC_FIRE_BASE_APP_ID,
+  appId: "1:673024204488:web:12210ff0d886e3854bcffd",
   measurementId: "G-F5WW59LD5P",
 };
 
