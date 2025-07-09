@@ -8,13 +8,14 @@ import Breadcrumb from "./components/Breadcrumb";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Shoe Ecommerce",
-  description: "Your one-stop shop for shoes",
+  title: "Kicksneak | Trendy Sneakers & Footwear for Men & Women",
+  description: "Shop the latest sneakers, running shoes, and casual footwear at Kicksneak. Discover top brands, exclusive drops, and unbeatable deals for men and women. Fast shipping and easy returns.",
+  keywords: "sneakers, shoes online, men's sneakers, women's sneakers, casual shoes, running shoes, buy shoes online, Kicksneak, sneaker store, athletic shoes, trendy footwear, shoe sale"
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en">  
       <body className={`${inter.className} overflow-x-hidden`}>
         <CartProvider>
           <Navbar />

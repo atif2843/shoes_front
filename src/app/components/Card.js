@@ -118,7 +118,7 @@ export default function Card({ product }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition w-full max-w-xs h-[500px] flex flex-col">
+    <div className="mx-auto bg-white rounded-lg shadow-md hover:shadow-lg transition w-full max-w-xs h-[500px] flex flex-col">
       {/* Product Image with Wishlist Icon */}
       <Link href={`/products/${product.slug}`}>
       <div className="relative border-1 border-gray-200 rounded-lg flex justify-center h-[300px]">

@@ -7,6 +7,7 @@ import {
   faInstagram,
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
 import { useState } from "react";
 import supabase from "@/app/api/auth/supabaseClient";
 
@@ -62,9 +63,7 @@ export default function Footer() {
         <div>
           <h2 className="text-lg font-bold">Kicksneak</h2>
           <p className="text-sm mt-2">
-            Kicksneak offers this website, including all information, tools, and
-            services available from this site to you, the user, policies, and
-            notices stated here.
+            Kicksneak offers the latest sneakers and footwear for men and women. Shop trendy, comfortable shoes from top brands with fast shipping, great deals, and easy returns. Step up your shoe game today!
           </p>
         </div>
 
@@ -73,21 +72,16 @@ export default function Footer() {
           <div>
             <h3 className="text-md font-semibold">INFO</h3>
             <ul className="mt-2 space-y-1 text-sm">
-              <li>Contact Us</li>
-              <li>Releases</li>
-              <li>Brands</li>
+              <li><Link href="/contact">Contact Us</Link></li>
+              <li><Link href="/brands">Brands</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="text-md font-semibold">POLICIES</h3>
-            <ul className="mt-2 space-y-1 text-sm">
-              <li>Help Center</li>
-              <li>Privacy Policy</li>
-              <li>Returns & Exchange</li>
-              <li>Terms & Conditions</li>
-              <li>Order & Shipping</li>
-              <li>Terms of Service</li>
-            </ul>
+            <ul className="mt-2 space-y-1 text-sm">              
+              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+              <li><Link href="/terms-and-conditions">Terms & Conditions</Link></li>
+              </ul>
           </div>
         </div>
 
@@ -95,8 +89,7 @@ export default function Footer() {
         <div>
           <h3 className="text-md font-semibold">Sign Up to Our Newsletter</h3>
           <p className="text-sm mt-2">
-            Get the latest beauty secrets and trends. Sign up for our newsletter
-            and stay informed about all things beauty.
+            Get the latest shoe trends and style tips. Sign up for our newsletter and stay ahead with exclusive kicks news and offers!
           </p>
           <form onSubmit={handleSubscribe} className="mt-3 flex sm:flex-row flex-col items-center flex-wrap">
             <div className="flex w-full sm:w-auto">
@@ -126,28 +119,30 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto mt-8 flex flex-col md:flex-row justify-between items-center border-t border-white/20 pt-4">
         {/* Social Icons */}
         <div className="flex space-x-4">
+          {/* <Link href="#">
           <FontAwesomeIcon
             icon={faTwitter}
             className="w-5 h-5 cursor-pointer hover:text-gray-300"
-          />
-          <FontAwesomeIcon
+          /></Link>*/}
+          <Link href="https://www.instagram.com/kicksneak._?igsh=em9kanZoNTJxejU2" target="_blank"><FontAwesomeIcon
             icon={faInstagram}
             className="w-5 h-5 cursor-pointer hover:text-gray-300"
-          />
-          <FontAwesomeIcon
+          /></Link>
+          <Link href="https://www.facebook.com/share/1B3RyRhAH2/" target="_blank"><FontAwesomeIcon
             icon={faFacebook}
             className="w-5 h-5 cursor-pointer hover:text-gray-300"
-          />
+          /></Link>
         </div>
 
         {/* Security & Services Icons */}
         <div className="flex space-x-6 mt-4 md:mt-0 text-sm flex-wrap justify-center gap-4">
-          <div className="flex items-center space-x-1">
+          {/*<div className="flex items-center space-x-1">
             <CreditCard size={18} /> <span>Secure Payments</span>
           </div>
-          <div className="flex items-center space-x-1">
+          
+          div className="flex items-center space-x-1">
             <Truck size={18} /> <span>Free Delivery</span>
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -262,8 +262,8 @@ export default function Navbar() {
             <Link href="/">
               <Image
               src="/images/logo.png"
-              alt="Logo"
-              title="Logo"
+              alt="Kicksneak Logo"
+              title="Kicksneak Logo"
               width="70"
               height="70"
               />
@@ -273,7 +273,7 @@ export default function Navbar() {
             {/* Desktop Menu */}
             <div className="desktop-menu-900 space-x-6 font-geist">
               {Object.entries(NavItems).map(([key, value]) => (
-                <Link key={key} href={value} className="hover:text-blue-500">
+                <Link key={key} href={value} className="hover:text-blue-500 underline-offset-7 hover:underline transition-colors hover:text-gray-600" onClick={() => setMenuOpen(false)}>
                   {key.replace(/([A-Z])/g, " $1")}
                 </Link>
               ))}

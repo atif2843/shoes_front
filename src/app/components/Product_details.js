@@ -192,13 +192,13 @@ export default function ProductDetail({ product }) {
           <p className="text-2xl font-semibold text-black flex items-center">
             {product.discount > 0 && (
               <span className="bg-red-500 rounded-full py-1 px-3 text-white text-xs mr-2 font-normal">
-                {product.discount}% off
+                {Math.round(product.discount)}% off
               </span>
             )}
             ₹ {product.sellPrice.toLocaleString()}{" "}
             {product.actualPrice && (
               <span className="line-through text-gray-500 font-normal text-lg ml-3">
-                ₹ {product.actualPrice}
+                ₹ {product.actualPrice.toLocaleString()}
               </span>
             )}
           </p>
@@ -206,7 +206,7 @@ export default function ProductDetail({ product }) {
           {/* Size Selection */}
           <div className="mt-4">
             <h2 className="text-sm font-medium">Select Shoe Size</h2>
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-2 flex-wrap">
               {product.size && product.size.map((size) => (
                 <button
                   key={size}
@@ -274,7 +274,7 @@ export default function ProductDetail({ product }) {
             </button>
           </div>
 
-          {/* Features */}
+          {/* Features 
           <div className="mt-6 grid grid-cols-3 gap-4">
             <div className="flex items-center gap-2 text-sm">
               <Lock size={20} /> Secure Payments
@@ -288,7 +288,7 @@ export default function ProductDetail({ product }) {
             <div className="flex items-center gap-2 text-sm">
               <ShieldCheck size={20} /> 100% Genuine
             </div>
-          </div>
+          </div>*/}
           <div className="mt-6 border-t pt-4">
             <button
               onClick={() => setIsDetailsOpen(!isDetailsOpen)}
