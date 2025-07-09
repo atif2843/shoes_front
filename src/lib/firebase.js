@@ -18,7 +18,7 @@ const firebaseConfig = {
   projectId: "shoe-369b4",
   storageBucket: "shoe-369b4.firebasestorage.app",
   messagingSenderId: "673024204488",
-  appId: "1:673024204488:web:12210ff0d886e3854bcffd",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: "G-F5WW59LD5P",
 };
 
