@@ -13,8 +13,7 @@ import supabase from "@/app/api/auth/supabaseClient";
 
 // Your Firebase configuration (Replace with your credentials)
 const firebaseConfig = {
-  //apiKey: process.env.FIREBASE_API_KEY,
-  apiKey: "AIzaSyAvxLquXzHF_o1IgYGFMJFm3LrXrYJ5u48",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "shoe-369b4.firebaseapp.com",
   projectId: "shoe-369b4",
   storageBucket: "shoe-369b4.firebasestorage.app",
