@@ -42,13 +42,13 @@ export default function BrandProductList({
   }, [sortOption, filteredProducts]);
 
   return (
-    <div className="container mx-auto py-25">
+    <div className="container mx-auto">
       {/* Brand Image */}
       {brandDetails ? (
         <div className="relative">
-          <div className="min-h-5 h-50 overflow-hidden flex items-center justify-center w-full">
+          <div className="min-h-10 h-75 overflow-hidden flex items-center justify-center w-full">
             <img
-              src={brandDetails.bg_image}
+              src={brandDetails.backgroundImage}
               alt={`${brandslug} background`}
               className="object-cover"
             />

@@ -1,27 +1,31 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 const promotions = [
   {
     id: 1,
     image: "/images/ads/ads.jpeg", // Adjusted path
-    title: "NIKE AIR 1 RED",
+    title: "SNEAKERS",
     subtitle: "Limited Edition Shoes",
-    buttonText: "Shop Now",
+    buttonText: "Explore Now",
+    link: "/products",
     large: true,
   },
   {
     id: 2,
-    image: "/images/ads/ads2.png",
-    title: "ADIDAS MAX A SHOES",
-    buttonText: "Shop Now",
+    image: "/images/ads/ads2.jpg",
+    title: "SAMBA OG",
+    buttonText: "Explore Now",
+    link: "/products",
     large: false,
   },
   {
     id: 3,
-    image: "/images/ads/ads3.png",
-    title: "CONVERSE CHUCK 70",
-    buttonText: "Shop Now",
+    image: "/images/ads/ads3.jpg",
+    title: "NIKE",
+    buttonText: "Explore Now",
+    link: "/products",
     large: false,
   },
 ];
@@ -43,9 +47,11 @@ export default function Ads() {
         <div className="absolute inset-0  rounded-2xl flex flex-col justify-end p-6 text-white z-10">
           <p className="text-sm">{promotions[0].subtitle}</p>
           <h2 className="text-2xl font-bold">{promotions[0].title}</h2>
+          <Link href={promotions[0].link} className="mt-2 text-blue-400 hover:underline">
           <button className="mt-3 px-4 py-2 bg-white text-black rounded-md w-max">
             {promotions[0].buttonText}
           </button>
+          </Link>
         </div>
       </div>
 
@@ -64,9 +70,11 @@ export default function Ads() {
             </div>
             <div className="absolute inset-0 rounded-2xl flex flex-col justify-end p-4 text-white z-10">
               <h3 className="text-lg font-bold">{promo.title}</h3>
+               <Link href={promo.link} className="mt-2 text-blue-400 hover:underline">
               <button className="mt-2 px-3 py-1 bg-white text-black rounded-md w-max">
                 {promo.buttonText}
               </button>
+            </Link>
             </div>
           </div>
         ))}
